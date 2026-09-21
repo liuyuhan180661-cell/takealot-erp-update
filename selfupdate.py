@@ -110,16 +110,21 @@ def fetch_first(channels: list, path: str, timeout: int = 30, bust_cache: bool =
     """
     errs = []
     for base in channels:
+        # GitHub Contents API 对 >1MB 的文件不返回内容（content 为空）→ 只让它服务 update.json；
+        # 更新包文件名带版本号，走 raw/gh-proxy/jsDelivr 正常缓存即可。
+        if "api.github.com" in base and path != "update.json":
+            continue
         if "{path}" in base:
             url = base.replace("{path}", path.lstrip("/"))
         else:
             url = base.rstrip("/") + "/" + path.lstrip("/")
+        _api = "api.github.com" in url
         if bust_cache:
             url += ("&" if "?" in url else "?") + "cb=%d" % int(time.time())
         try:
             data = fetch(url, timeout)
             # GitHub Contents API 返回的是 base64 包装的 JSON
-            if "api.github.com" in url:
+            if _api:
                 meta = json.loads(data.decode("utf-8", "replace"))
                 if isinstance(meta, dict) and meta.get("content") and meta.get("encoding") == "base64":
                     import base64

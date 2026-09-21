@@ -3,7 +3,7 @@
   "product": "takealot-erp",
   "display_name": "Takealot",
   "version": "2026.09.21.2",
-  "released_at": "2026-09-21T19:15:06+08:00",
+  "released_at": "2026-09-21T19:16:40+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
@@ -63,7 +63,7 @@
     "hermes-home/skills/takealot-erp-operator/SKILL.md": "9255d96daf232ea66a6ccdfedc7be33d"
   },
   "file_count": 48,
-  "notes": "本次：更新器随包携带；新增 erp-self-update 技能；更新器通道改为 GitHub API 优先（无缓存，发布即可见），raw/gh-proxy/jsDelivr 依次降级。",
+  "notes": "本次：更新器随包携带；erp-self-update 技能；清单走 GitHub API（无缓存），包走 raw/gh-proxy/jsDelivr。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
