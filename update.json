@@ -3,7 +3,7 @@
   "product": "takealot-erp",
   "display_name": "Takealot",
   "version": "2026.09.21.1",
-  "released_at": "2026-09-21T19:06:09+08:00",
+  "released_at": "2026-09-21T19:06:52+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
@@ -59,7 +59,7 @@
     "hermes-home/skills/takealot-erp-operator/SKILL.md": "9255d96daf232ea66a6ccdfedc7be33d"
   },
   "file_count": 44,
-  "notes": "首次发布：安装器现在会安装随包携带的附加技能；意图路由新增逃生条款（无关请求不再被误导）与误命中记账；自检 AI 通道检查跟随所配置的 provider。",
+  "notes": "首次发布：安装器会安装随包携带的附加技能；意图路由新增逃生条款与误命中记账；自检 AI 通道跟随配置的 provider；更新器加入缓存穿透与通道优先级修正。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",

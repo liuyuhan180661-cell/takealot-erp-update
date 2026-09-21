@@ -35,10 +35,12 @@ try:
 except Exception:
     pass
 
+#: 顺序有讲究：jsDelivr 对 @main 有较长缓存，会把"新版本"压住 → 放最后；
+#: raw 的缓存只有几分钟，作为首选；gh-proxy 是 raw 的镜像，同样新鲜。
 DEFAULT_CHANNELS = [
-    "https://cdn.jsdelivr.net/gh/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{repo}/{ref}/",
     "https://gh-proxy.com/https://raw.githubusercontent.com/{repo}/{ref}/",
+    "https://cdn.jsdelivr.net/gh/{repo}@{ref}/",
 ]
 UA = {"User-Agent": "erp-selfupdate/1.0", "Accept": "*/*"}
 
@@ -95,11 +97,17 @@ def fetch(url: str, timeout: int = 30) -> bytes:
         return resp.read()
 
 
-def fetch_first(channels: list, path: str, timeout: int = 30):
-    """按顺序试每个通道；返回 (bytes, 实际使用的 URL)。"""
+def fetch_first(channels: list, path: str, timeout: int = 30, bust_cache: bool = False):
+    """按顺序试每个通道；返回 (bytes, 实际使用的 URL)。
+
+    bust_cache=True 时给 URL 加上一次性查询串：CDN（尤其 jsDelivr 的 @main）缓存很顽固，
+    不加的话客户端可能一直读到旧清单、误判"已是最新"。包文件名本身带版本，无需穿透。
+    """
     errs = []
     for base in channels:
         url = base.rstrip("/") + "/" + path.lstrip("/")
+        if bust_cache:
+            url += ("&" if "?" in url else "?") + "cb=%d" % int(time.time())
         try:
             return fetch(url, timeout), url
         except urllib.error.HTTPError as e:
@@ -155,7 +163,7 @@ def cmd_status(plugin_dir: str) -> int:
 
 
 def cmd_check(plugin_dir: str, channels: list, cfg: dict, quiet: bool = False) -> dict:
-    raw, url = fetch_first(channels, "update.json")
+    raw, url = fetch_first(channels, "update.json", bust_cache=True)
     remote = json.loads(raw.decode("utf-8", "replace"))
     print("通道可用 : %s" % url)
     print("远端版本 : %s  (%s)" % (remote.get("version"), remote.get("released_at")))
