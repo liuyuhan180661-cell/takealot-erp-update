@@ -111,7 +111,7 @@ def fetch_first(channels: list, path: str, timeout: int = 30, bust_cache: bool =
     errs = []
     for base in channels:
         if "{path}" in base:
-            url = base.format(path=path.lstrip("/"))
+            url = base.replace("{path}", path.lstrip("/"))
         else:
             url = base.rstrip("/") + "/" + path.lstrip("/")
         if bust_cache:
@@ -391,7 +391,8 @@ def main() -> int:
 
     if not args.repo and not args.channel:
         raise SystemExit("需要 --repo owner/repo（或用 ERP_UPDATE_REPO 环境变量），或 --channel <URL前缀>")
-    channels = args.channel or [c.format(repo=args.repo, ref=args.ref) for c in DEFAULT_CHANNELS]
+    # 只替换已知占位：{path} 留给 fetch_first 逐次填，避免 .format() 因缺键直接炸
+    channels = args.channel or [c.replace("{repo}", args.repo).replace("{ref}", args.ref) for c in DEFAULT_CHANNELS]
 
     info = cmd_check(plugin_dir, channels, cfg)
     audit(plugin_dir, action="check", remote=info["remote"].get("version"),
