@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.09.21.2",
-  "released_at": "2026-09-21T19:16:40+08:00",
+  "version": "2026.09.21.3",
+  "released_at": "2026-09-21T19:23:11+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
-    "name": "Takealot-ERP-update-2026.09.21.2.zip",
-    "size": 1427903,
-    "md5": "094fea473e29e242a3e9c32a908af4bc",
-    "sha256": "f1748395a9024a6b3bc03908a7e4728e18223d42a5f9471ffb7ce472c4d005c7"
+    "name": "Takealot-ERP-update-2026.09.21.3.zip",
+    "size": 1420421,
+    "md5": "775ed5ca571134e0c450d52a42e0266f",
+    "sha256": "10c40f0dd603c3b0de668af0d046cf6dac14ac591e148aad8a79751b90fca7c0"
   },
   "files": {
     "extension/Takealot-Assistant-Extension/INSTALL.md": "4c29438760edce98422daa7148391c36",
@@ -38,7 +38,6 @@
     "extension/Takealot-Assistant-Extension/styles/openclaw_extension.css": "a0a456feca315a68f7c186e07d0a07d6",
     "hermes-home/desktop-plugins/takealot-erp/plugin.js": "ec449519ddb6b46d156360940e1fcfb8",
     "hermes-home/plugins/takealot-erp/README.md": "d218627716f9fe4d4928c5622004577e",
-    "hermes-home/plugins/takealot-erp/VERIFICATION-v6.md": "d57418acff7e64fbcef08df369741f7e",
     "hermes-home/plugins/takealot-erp/__init__.py": "4da90e38065efffff1f96651316dd85c",
     "hermes-home/plugins/takealot-erp/dashboard/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "hermes-home/plugins/takealot-erp/dashboard/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
@@ -62,8 +61,8 @@
     "hermes-home/skills/qwen-token-plan-setup/setup_llm_provider.py": "4b6d804dceff85c5b24ecc7b58629a84",
     "hermes-home/skills/takealot-erp-operator/SKILL.md": "9255d96daf232ea66a6ccdfedc7be33d"
   },
-  "file_count": 48,
-  "notes": "本次：更新器随包携带；erp-self-update 技能；清单走 GitHub API（无缓存），包走 raw/gh-proxy/jsDelivr。",
+  "file_count": 47,
+  "notes": "自更新恢复（插件/后端/技能走 GitHub 通道）；**浏览器扩展不自动更新**——扩展是 Chrome 里手动加载的，更新器会把它单独列出来并给手动步骤。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",

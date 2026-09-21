@@ -153,11 +153,12 @@ def map_member(member: str, delivery_dir: str, cfg: dict) -> str | None:
     # 绝不写 state（客户数据）
     if "/state/" in "/" + rel or rel.startswith("state/"):
         return None
+    # 注意：**扩展不在白名单内** —— Chrome 里的扩展是手动「加载已解压」的，
+    # 脚本更新它没用（还得用户去 chrome://extensions 重新加载），所以按约定一律手动。
     rules = [
         ("payload/hermes-home/plugins/%s/" % pid, os.path.join(home, "plugins", pid)),
         ("payload/hermes-home/desktop-plugins/%s/" % pid, os.path.join(home, "desktop-plugins", pid)),
         ("payload/hermes-home/skills/", os.path.join(home, "skills")),
-        ("payload/extension/%s/" % extn, os.path.join(home, extn)),
     ]
     for pre, dst in rules:
         if rel.startswith(pre):
@@ -281,6 +282,21 @@ def cmd_apply(plugin_dir: str, info: dict, cfg: dict) -> int:
     if len(plan) > 12:
         print("  … 其余 %d 个" % (len(plan) - 12))
 
+    # 扩展：本次包里带了哪些扩展文件、其中哪些与本机不同 → 交给用户手动更新
+    ext_prefix = remote["delivery_dir"] + "/payload/extension/%s/" % cfg["extName"]
+    ext_changed = []
+    for member in zf.namelist():
+        if not member.startswith(ext_prefix) or member.endswith("/"):
+            continue
+        tail = member[len(ext_prefix):]
+        dst = os.path.join(hermes_home(), cfg["extName"], tail.replace("/", os.sep))
+        try:
+            cur = open(dst, "rb").read()
+        except Exception:
+            cur = None
+        if cur is None or hashlib.md5(cur).hexdigest() != hashlib.md5(zf.read(member)).hexdigest():
+            ext_changed.append(tail)
+
     # 备份
     backup = os.path.join(state_dir(plugin_dir), "_backup", ver + "-" + time.strftime("%Y%m%d%H%M%S"))
     os.makedirs(backup, exist_ok=True)
@@ -316,7 +332,19 @@ def cmd_apply(plugin_dir: str, info: dict, cfg: dict) -> int:
     audit(plugin_dir, action="apply", version=ver, result="ok", files=len(plan), backup=backup)
     print()
     print("完成。当前版本 → %s" % ver)
-    print("提示：界面半边(plugin.js) 由桌面 App 热加载；浏览器扩展若更新了，请在 chrome://extensions 点一次「重新加载」。")
+    print("提示：界面半边(plugin.js) 由桌面 App 热加载，无需重启。")
+    if ext_changed:
+        print()
+        print("=== 浏览器扩展有更新（按约定不自动更新，需手动处理）===")
+        for tail in ext_changed[:10]:
+            print("  · %s" % tail)
+        if len(ext_changed) > 10:
+            print("  · … 其余 %d 个" % (len(ext_changed) - 10))
+        print("  手动做法：把更新包里的 payload/extension/%s/ 覆盖到" % cfg["extName"])
+        print("            " + os.path.join(hermes_home(), cfg["extName"]) + "\\")
+        print("            （扩展是「加载已解压」装的，脚本改它无效，必须走这一步。）")
+    else:
+        print("提示：本次更新不涉及浏览器扩展。")
     print("      建议接着跑 selfcheck.ps1 自检（应 9/9 PASS）。")
     return 0
 
