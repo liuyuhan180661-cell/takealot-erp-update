@@ -38,9 +38,14 @@ except Exception:
 #: 顺序有讲究：jsDelivr 对 @main 有较长缓存，会把"新版本"压住 → 放最后；
 #: raw 的缓存只有几分钟，作为首选；gh-proxy 是 raw 的镜像，同样新鲜。
 DEFAULT_CHANNELS = [
-    "https://raw.githubusercontent.com/{repo}/{ref}/",
-    "https://gh-proxy.com/https://raw.githubusercontent.com/{repo}/{ref}/",
-    "https://cdn.jsdelivr.net/gh/{repo}@{ref}/",
+    # 1) GitHub Contents API：**没有 CDN 缓存**，发布后立刻可见（匿名 60 次/小时够用）
+    "https://api.github.com/repos/{repo}/contents/{path}?ref={ref}",
+    # 2) raw：只有几分钟缓存，可靠且快
+    "https://raw.githubusercontent.com/{repo}/{ref}/{path}",
+    # 3) gh-proxy：raw 的镜像（中国网络）
+    "https://gh-proxy.com/https://raw.githubusercontent.com/{repo}/{ref}/{path}",
+    # 4) jsDelivr：快，但对 @main 缓存很久（可达数小时）→ 只当兜底
+    "https://cdn.jsdelivr.net/gh/{repo}@{ref}/{path}",
 ]
 UA = {"User-Agent": "erp-selfupdate/1.0", "Accept": "*/*"}
 
@@ -105,15 +110,27 @@ def fetch_first(channels: list, path: str, timeout: int = 30, bust_cache: bool =
     """
     errs = []
     for base in channels:
-        url = base.rstrip("/") + "/" + path.lstrip("/")
+        if "{path}" in base:
+            url = base.format(path=path.lstrip("/"))
+        else:
+            url = base.rstrip("/") + "/" + path.lstrip("/")
         if bust_cache:
             url += ("&" if "?" in url else "?") + "cb=%d" % int(time.time())
         try:
-            return fetch(url, timeout), url
+            data = fetch(url, timeout)
+            # GitHub Contents API 返回的是 base64 包装的 JSON
+            if "api.github.com" in url:
+                meta = json.loads(data.decode("utf-8", "replace"))
+                if isinstance(meta, dict) and meta.get("content") and meta.get("encoding") == "base64":
+                    import base64
+                    data = base64.b64decode(meta["content"])
+                elif isinstance(meta, dict) and meta.get("message"):
+                    raise RuntimeError("API: %s" % meta["message"])
+            return data, url
         except urllib.error.HTTPError as e:
-            errs.append("%s → HTTP %d" % (url, e.code))
+            errs.append("%s → HTTP %d" % (url.split("?")[0], e.code))
         except Exception as e:
-            errs.append("%s → %s" % (url, type(e).__name__))
+            errs.append("%s → %s" % (url.split("?")[0], type(e).__name__))
     raise SystemExit("所有通道都失败：\n  " + "\n  ".join(errs))
 
 
