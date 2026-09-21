@@ -46,9 +46,12 @@ UA = {"User-Agent": "erp-selfupdate/1.0", "Accept": "*/*"}
 # ---------------------------------------------------------------- 路径解析
 
 def hermes_home() -> str:
-    v = os.environ.get("HERMES_HOME")
-    if v and os.path.isdir(v.strip()):
-        return v.strip()
+    """HERMES_HOME 优先且**即使目录还不存在也认**（全新机器/沙箱常见），其余情况才回落默认位置。
+    值要先去掉空格与引号：环境变量经常带尾部空格，拼出来的路径会"看着对却找不到"。"""
+    v = (os.environ.get("HERMES_HOME") or "").strip().strip('"').strip("'").rstrip("\\/")
+    if v:
+        os.makedirs(v, exist_ok=True)
+        return v
     if os.name == "nt":
         p = os.path.join(os.environ.get("LOCALAPPDATA", ""), "hermes")
         if os.path.isdir(p):
