@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.09.22.1",
-  "released_at": "2026-09-22T21:49:09+08:00",
+  "version": "2026.09.22.2",
+  "released_at": "2026-09-22T21:51:00+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
-    "name": "Takealot-ERP-update-2026.09.22.1.zip",
-    "size": 1441398,
-    "md5": "3d0e80ff2c4c2e20150ee75027de39e6",
-    "sha256": "56bb420bb99ccb4235e30809b7599df4a1171b55c28c1a26e7dc400eb8c1fa6e"
+    "name": "Takealot-ERP-update-2026.09.22.2.zip",
+    "size": 1441394,
+    "md5": "bc595c6c2bd11757e308bb0b3629abe5",
+    "sha256": "c24971c53db2c131598ecd1955f2c81641280513bfb307787d44c6f9ebf1d28f"
   },
   "files": {
     "extension/Takealot-Assistant-Extension/INSTALL.md": "4c29438760edce98422daa7148391c36",
@@ -32,7 +32,7 @@
     "extension/Takealot-Assistant-Extension/popup/popup.js": "dda4945453c075e7a29388fdf2c71ff4",
     "extension/Takealot-Assistant-Extension/shared/CDP-README.md": "d2634d32e523bbd8da66315cbbfc7cef",
     "extension/Takealot-Assistant-Extension/shared/bridge.js": "ae1941f8a8f61da88423aa34cc793fec",
-    "extension/Takealot-Assistant-Extension/shared/cdp_capture.js": "8628ae09a8d5b89b6d332558a349ad9f",
+    "extension/Takealot-Assistant-Extension/shared/cdp_capture.js": "f5562a6f8ce64a1ba573ec08ff1e7930",
     "extension/Takealot-Assistant-Extension/shared/template_sync.js": "25422eb1e6844c81338b301926827edd",
     "extension/Takealot-Assistant-Extension/shared/utils.js": "db5c528e21f484614678067807cc5bf4",
     "extension/Takealot-Assistant-Extension/styles/openclaw_extension.css": "a0a456feca315a68f7c186e07d0a07d6",
@@ -62,7 +62,7 @@
     "hermes-home/skills/takealot-erp-operator/SKILL.md": "502e9448ee5db031e97e72e257f3ab6b"
   },
   "file_count": 47,
-  "notes": "采集箱：未指派店铺的采集行不再被界面藏掉（自动归属到错店的风险仍然由人工确认）。BuyBox：可搜 SKU/TSIN/PLID/标题、按可跟价/已丢失/没抓过等筛选、单条跟卖手填价跟价、批量跟价、一键补竞品数据（抓公开页补最低竞品价与 BuyBox 归属）。载入提速：整店商品目录改为秒开（先用上次快照、后台自动刷新），界面显示数据新鲜度并可随时点「刷新目录」强制取最新。同时修了两处后端问题：跨店改价风险、缺少竞品数据的商品会让整批跟价失败。",
+  "notes": "整店商品目录秒开（先用上次快照、后台自动刷新）+ 界面显示数据新鲜度、可随时「刷新目录」强制取最新；BuyBox 支持搜索(SKU/TSIN/PLID/标题)、筛选与排序、单条手填价跟价、批量跟价、一键补竞品数据；采集箱未指派店铺的行不再被界面藏掉；修两处后端问题（跨店改价风险、缺竞品数据的商品导致整批跟价失败）。本版扩展无变化，无需重新加载扩展。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
