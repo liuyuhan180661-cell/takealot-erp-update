@@ -3,9 +3,9 @@ BOOTSTRAP 引导说明（新机器 / 老客户第一次接上自更新）
 
 客户机上的 Hermes agent（或你自己）按下面三步走，之后就能一直自己更新：
 
-1) 下载更新器（二选一，哪个通就用哪个；202609222151 那段是防止 CDN 缓存压住新版本的，原样带上）
-   https://raw.githubusercontent.com/<owner>/<repo>/main/selfupdate.py?cb=202609222151
-   https://cdn.jsdelivr.net/gh/<owner>/<repo>@main/selfupdate.py?cb=202609222151
+1) 下载更新器（二选一，哪个通就用哪个；202609231420 那段是防止 CDN 缓存压住新版本的，原样带上）
+   https://raw.githubusercontent.com/<owner>/<repo>/main/selfupdate.py?cb=202609231420
+   https://cdn.jsdelivr.net/gh/<owner>/<repo>@main/selfupdate.py?cb=202609231420
    放到： %LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py
 
 2) 只检查、不动文件（把所有结果念给用户）
