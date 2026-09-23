@@ -3,16 +3,16 @@ BOOTSTRAP 引导说明（新机器 / 老客户第一次接上自更新）
 
 客户机上的 Hermes agent（或你自己）按下面三步走，之后就能一直自己更新：
 
-1) 下载更新器（二选一，哪个通就用哪个；202609231420 那段是防止 CDN 缓存压住新版本的，原样带上）
-   https://raw.githubusercontent.com/<owner>/<repo>/main/selfupdate.py?cb=202609231420
-   https://cdn.jsdelivr.net/gh/<owner>/<repo>@main/selfupdate.py?cb=202609231420
+1) 下载更新器（二选一，哪个通就用哪个；202609231829 那段是防止 CDN 缓存压住新版本的，原样带上）
+   https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202609231829
+   https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/selfupdate.py?cb=202609231829
    放到： %LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py
 
 2) 只检查、不动文件（把所有结果念给用户）
    <Hermes venv python> "%LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py" ^
-       --repo <owner>/<repo>
+       --repo liuyuhan180661-cell/takealot-erp-update
 
 3) 用户确认后应用（自动备份；出问题可 --rollback）
-   <Hermes venv python> "...\selfupdate.py" --repo <owner>/<repo> --apply
+   <Hermes venv python> "...\selfupdate.py" --repo liuyuhan180661-cell/takealot-erp-update --apply
 
 规则：先 dry-run 再 apply；校验失败一律中止；永不碰 state/；更新完跑 selfcheck.ps1 并报实际结果。
