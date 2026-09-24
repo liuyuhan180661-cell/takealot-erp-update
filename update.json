@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.09.25.1",
-  "released_at": "2026-09-25T00:46:17+08:00",
+  "version": "2026.09.25.2",
+  "released_at": "2026-09-25T00:53:15+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
-    "name": "Takealot-ERP-update-2026.09.25.1.zip",
-    "size": 1509427,
-    "md5": "ef2b10a030fb680ff4aaaf4db152264d",
-    "sha256": "6bba004140f01178c68f3667931e1ea761705f953d847c8f26141d27d8b972e6"
+    "name": "Takealot-ERP-update-2026.09.25.2.zip",
+    "size": 1509595,
+    "md5": "279a4f582a6c1aa0a3940142fa28e5fa",
+    "sha256": "2f8924099d025f311c46862cc0144eccc33b249f0f91b1a3673c27daad974c9a"
   },
   "files": {
     "extension/Takealot-Assistant-Extension/INSTALL.md": "4c29438760edce98422daa7148391c36",
@@ -36,7 +36,7 @@
     "extension/Takealot-Assistant-Extension/shared/template_sync.js": "25422eb1e6844c81338b301926827edd",
     "extension/Takealot-Assistant-Extension/shared/utils.js": "db5c528e21f484614678067807cc5bf4",
     "extension/Takealot-Assistant-Extension/styles/openclaw_extension.css": "a0a456feca315a68f7c186e07d0a07d6",
-    "hermes-home/desktop-plugins/takealot-erp/plugin.js": "451affd1d7bb5b41537b460e7943e4c2",
+    "hermes-home/desktop-plugins/takealot-erp/plugin.js": "b4684c9096b3a425957ddff873835aba",
     "hermes-home/plugins/takealot-erp/README.md": "d218627716f9fe4d4928c5622004577e",
     "hermes-home/plugins/takealot-erp/__init__.py": "4da90e38065efffff1f96651316dd85c",
     "hermes-home/plugins/takealot-erp/dashboard/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
@@ -68,7 +68,7 @@
     "hermes-home/skills/takealot-erp-operator/SKILL.md": "e17ebbec55f2e69be152f3a72bcb86f0"
   },
   "file_count": 53,
-  "notes": "【改了什么】\n\n1. 成本改成按采购价填：直接输 ¥（人民币）金额，右边自动折成 R —— 不用自己先换算一道。\n   汇率（1 CNY = ? ZAR）和汇损系数都是预填好的，随时可改；头程（发往 Takealot DC）也按 ¥ 填。\n2. 修了一处会让数字算错的问题：以前在采集箱里填的「汇损」和「头程」没有进到计算里（填了等于白填），\n   现在会真实扣减，「到手」会随之变化。\n3. 表格文字不再挤压：「售价 / 成本」和「预估净利」列的金额再大也在一行内显示，不会把 R 挤到单独一行；\n   行里只留结论，口径解释改到鼠标悬停里看。\n4. 抓取更准：点行里的深入分析时改用商品本身（链接 / PLID）去抓，原先用货号 TSIN，解析不到会被误报成\n   「抓取通道未通」（实际网络是好的）；现在抓不到会如实写明原因。\n5. 新增「毛利粗算」＝ 售价 − 平台费（成功费 + 履约费 + 跨仓费），不含采购成本 / 头程 / 汇损。\n   抓完就能看到，不必先填核算参数。\n6. 默认汇率预填（1 ZAR = 0.4 CNY，即 1 CNY = 2.5 ZAR）——这只是起始值，按你自己的结汇价改。\n\n【需要你做什么】\n\n1. 完全退出 Hermes 再重新打开（插件与工具面只在启动时挂载，不重启看不到新界面）。\n2. 浏览器扩展本次没有变化，不需要重新加载。\n3. 采集箱里已有的行不会被清空。但如果之前那行的汇率是按「1 CNY = ? ZAR」填进了旧框（例如填了 2.5），\n   请打开那行点一次「保存核算参数」重填一遍，让口径对齐。\n\n【怎么自证】\n\n1. 跑费率自检（应最后一行输出「差异 0 项」）：\n   & \"$env:LOCALAPPDATA\\hermes\\hermes-agent\\venv\\Scripts\\python.exe\" \"$env:LOCALAPPDATA\\hermes\\plugins\\takealot-erp\\delivery\\verify\\verify_fee_engine.py\"\n2. 界面上看三处：\n   - 采集箱 → 点行标题下方的「▶ 核算与利润」→ 采购成本只填 ¥ 数字，右侧应立刻出现 R 换算值；\n   - 填好保存后，「到手 / 利润率」应随汇损与头程变化（这两项以前不生效）；\n   - 「预估净利」列应保持两行、金额不折行。",
+  "notes": "【改了什么】\n\n1. 抓完就出 AI 评估：抓取成功后系统会自动跑一次价值分析，你打开那一行就能直接看到结论，\n   不需要再点「生成价值分析」。同一个商品 24 小时内不会重复跑（不会重复花你的额度）；\n   想换最新数据时才点一次按钮。\n2. 表格里两处挤在窄格里的长句按规范收短（完整说明移到了鼠标悬停里）：\n   - 「跟卖不改内容（成本/汇率/重量在右侧明细里改）」→ 行内显示「跟卖行只改价与库存」\n   - 「选中后点「重新分析」」→ 行内显示「选中后可重抓」\n   这样金额和数字不会再被这些长句挤到折行。\n\n【需要你做什么】\n\n1. 完全退出 Hermes 再重新打开（插件在启动时挂载，不重启看不到变化）。\n2. 浏览器扩展本次没有变化，不需要重新加载。\n3. 已有的采集箱行不会被清空。\n\n【怎么自证】\n\n1. 界面上看两处：\n   - 采集箱里抓取成功后，行内展开的 AI 评估区应自己出现结论（不点按钮）；\n   - 「跟卖行只改价与库存」「选中后可重抓」两处是短句，鼠标停在上面能看到完整说明。\n2. 跑费率自检（应最后一行输出「差异 0 项」）：\n   & \"$env:LOCALAPPDATA\\hermes\\hermes-agent\\venv\\Scripts\\python.exe\" \"$env:LOCALAPPDATA\\hermes\\plugins\\takealot-erp\\delivery\\verify\\verify_fee_engine.py\"",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
