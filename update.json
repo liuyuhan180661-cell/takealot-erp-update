@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.09.23.3",
-  "released_at": "2026-09-23T18:41:04+08:00",
+  "version": "2026.09.24.1",
+  "released_at": "2026-09-24T21:52:39+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
-    "name": "Takealot-ERP-update-2026.09.23.3.zip",
-    "size": 1486606,
-    "md5": "b5af4ef0b1650e8943bc5c5863ab37a1",
-    "sha256": "80babefdb956055798ec233ac9d4977666e8d6e3147adb3a85dc3691b8a59400"
+    "name": "Takealot-ERP-update-2026.09.24.1.zip",
+    "size": 1496736,
+    "md5": "1bc9ab19e76afc9047cac9d2d4b6707e",
+    "sha256": "56fe352946e06d04df820b6c39b2c546a3ed174c621df21f5a78bab0b15b7a2b"
   },
   "files": {
     "extension/Takealot-Assistant-Extension/INSTALL.md": "4c29438760edce98422daa7148391c36",
@@ -53,18 +53,20 @@
     "hermes-home/plugins/takealot-erp/delivery/delivery_cfg.py": "57635dafb98349995f354a617903c6d8",
     "hermes-home/plugins/takealot-erp/delivery/selfupdate.py": "2ad05fbad3089ad86ace358a7f1ec057",
     "hermes-home/plugins/takealot-erp/delivery/setup_llm_provider.py": "4b6d804dceff85c5b24ecc7b58629a84",
+    "hermes-home/plugins/takealot-erp/delivery/verify/route_misfire_report.py": "59cfc59f977f39f8c483911579536897",
+    "hermes-home/plugins/takealot-erp/delivery/verify/verify_fee_engine.py": "85b7fb0be62c769857d92e44172316d0",
     "hermes-home/plugins/takealot-erp/plugin.yaml": "83bf024c668def385d1ff42b4a575a47",
-    "hermes-home/plugins/takealot-erp/skills/takealot-erp-operator/SKILL.md": "691e833193cde386872763d117f2484d",
-    "hermes-home/plugins/takealot-erp/tools.py": "f3c06b5b7d686bf6e47c182c670d49c2",
+    "hermes-home/plugins/takealot-erp/skills/takealot-erp-operator/SKILL.md": "e17ebbec55f2e69be152f3a72bcb86f0",
+    "hermes-home/plugins/takealot-erp/tools.py": "6786e2a7ae5c140460a00801d7f91cab",
     "hermes-home/plugins/takealot-erp/tools/routing-words.md": "71491d5c85e8d202005b564ec7422bab",
-    "hermes-home/skills/erp-self-update/SKILL.md": "ad7a463f190e01eb03a0fb9d76641e85",
+    "hermes-home/skills/erp-self-update/SKILL.md": "baee52cc677b3ca26782378dcb998bd8",
     "hermes-home/skills/erp-self-update/selfupdate.py": "2ad05fbad3089ad86ace358a7f1ec057",
     "hermes-home/skills/qwen-token-plan-setup/SKILL.md": "3433e59133c1d27818731e9264ec37d1",
     "hermes-home/skills/qwen-token-plan-setup/setup_llm_provider.py": "4b6d804dceff85c5b24ecc7b58629a84",
-    "hermes-home/skills/takealot-erp-operator/SKILL.md": "691e833193cde386872763d117f2484d"
+    "hermes-home/skills/takealot-erp-operator/SKILL.md": "e17ebbec55f2e69be152f3a72bcb86f0"
   },
-  "file_count": 49,
-  "notes": "自然语言可以直接设核算参数了 + 修掉采集箱列表在缺尺寸行上打不开的问题\n\n【新】对话里设核算参数（不用进界面也能填条件）\n· 直接说就行：「把这条的成本改成 30 元」「汇率填成 0.25」「重量设成 0.18 公斤」「长宽高补上 20x15x10」「头程改成 25」\n· agent 只写你本机的采集箱账本（state/collection.json），平台侧一个字都不写；改完会把新的「到手」念给你听\n· 目标行说得含糊（对得上多行、或没说哪一行）时它会先问你，不会自己挑一行乱改\n· 改价格/库存/标题图片这类平台写操作，仍然只能在界面里做\n\n【修】采集箱列表打不开（重要）\n· 现象：某一行算不出毛利率时（没填重量/尺寸或没填结汇率 —— 而这恰恰是大多数商品的情况），\n  整个采集箱列表会直接报错打不开。\n· 现在：这类行照常显示，到手显示「未定」，并告诉你有几行能算出毛利率（stats.marginRows）。\n  缺什么就补什么，不会再连累整页。\n\n【口径提醒】结汇率是「1 ZAR 值多少 RMB」（成本按 成本_RMB ÷ 该值 折算）。没填汇率或缺重量/尺寸时，\n工具不会给你一个猜出来的到手数字，只提示缺什么 —— 这是刻意的。\n\n【本版扩展与上一版逐字节一致】不需要重新加载 Chrome 扩展。\n\n【更新后请重启一次 Hermes】，新的后端与工具面才会生效（工具在进程启动时注册）。\n重启后可以在对话里查一下工具清单，应能看到 takealot_collection_update。\n\n自检命令（原样跑，必须看到差异 0）：\n  <Hermes venv python> \"%USERPROFILE%\\verify_fee_engine.py\"",
+  "file_count": 51,
+  "notes": "修：更新 ERP 不再被误判成\"抓商品\" + 自检脚本随包发（以后不用向我们索取）\n\n【修】「更新 ERP / 升级 / 回滚」这类请求不会再被当成商品抓取\n· 起因：你们那边更新完的报告里有一条「本轮是 ERP 更新而非商品抓取，却记了一行误命中」——判断正确。\n· 根因：更新说明里带通道地址（GitHub / gh-proxy / jsDelivr），而旧词表把任何网址都当成\n  「外部商品对象」，于是「更新 ERP（附下载地址）」必然被判成 crawl.single_product，\n  只能靠工具指令里的逃生条款忽略掉，并往 state\\route_misfire.jsonl 记一行。\n· 现在：更新 / 升级 / 回滚类动词 +（通道地址 或「更新包」）同时出现 → 不再注入抓取工具；\n  真商品链接（takealot.com/p/…、PLID、TSIN）照旧正常抓取。\n\n【新】两个自检脚本随包发（以前发布说明里让你跑的那个脚本其实没随包发出去，抱歉）\n  位置：<Hermes home>\\plugins\\takealot-erp\\delivery\\verify\\\n    verify_fee_engine.py      用你自己店铺的 /sales 逐笔核对费率，期望最后打印「差异 0 项」\n    route_misfire_report.py   误命中报表：哪句话被误判过、命中的是哪个词（据此收紧词表）\n  跑法（PowerShell，不需要管理员）：\n    $py = \"$env:LOCALAPPDATA\\hermes\\hermes-agent\\venv\\Scripts\\python.exe\"\n    $v  = \"$env:LOCALAPPDATA\\hermes\\plugins\\takealot-erp\\delivery\\verify\"\n    & $py \"$v\\verify_fee_engine.py\"\n    & $py \"$v\\route_misfire_report.py\"\n\n【多 profile 提醒（重要）】装和更新都是\"按 profile 走的\"：一个 profile = 一个独立的 Hermes home，\n  插件 / skills / config / state 各一套。本版只更新你**运行更新器的那个 profile**；\n  其它 profile（例如 profiles\\buzz）要在它自己的 HERMES_HOME 下再跑一遍：\n    $env:HERMES_HOME=\"$env:LOCALAPPDATA\\hermes\\profiles\\<名字>\"\n    & \"$env:LOCALAPPDATA\\hermes\\hermes-agent\\venv\\Scripts\\python.exe\" \"$env:HERMES_HOME\\plugins\\takealot-erp\\delivery\\selfupdate.py\" --repo liuyuhan180661-cell/takealot-erp-update --apply\n  先确认那个 profile 里有没有插件：Get-ChildItem \"$env:HERMES_HOME\\plugins\\takealot-erp\" -Name\n\n【文档】包内 INSTALL.md / CHECKLIST.md 补了三处：\n  · 对话里可以直接设核算参数（成本/汇率/汇损/头程/重量/尺寸，第 13 个工具；只写本机账本，平台侧不写）\n  · 上面两个随包发的自检脚本怎么跑、期望什么\n  · 多 profile 机器怎么装、怎么更新（INSTALL 第 4 节 ⑤）\n\n【更新后】重启一次 Hermes（后端与工具面在进程启动时注册）。本版**没动**浏览器扩展 → 不用重新加载扩展。\n重启后跑一次 selfcheck.ps1，期望 9/9 PASS。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
