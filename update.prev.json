@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.09.25.3",
-  "released_at": "2026-09-25T00:57:11+08:00",
+  "version": "2026.09.25.4",
+  "released_at": "2026-09-25T17:40:39+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
-    "name": "Takealot-ERP-update-2026.09.25.3.zip",
-    "size": 1504820,
-    "md5": "56ad079dc5bb3f26be2c064e78ce8a11",
-    "sha256": "1667fb2e4a2a5e950d7379fdb898ea38d117ec7cef1ef3da602058e7b673728a"
+    "name": "Takealot-ERP-update-2026.09.25.4.zip",
+    "size": 1512739,
+    "md5": "e4eb1b3218cf6f7c722ad523b6ab973a",
+    "sha256": "28b8d3eef4dd7b4fa6df1619f1361e3fa0e35fa1f8de12d64bf82b0ad6ebfb00"
   },
   "files": {
     "extension/Takealot-Assistant-Extension/INSTALL.md": "4c29438760edce98422daa7148391c36",
@@ -36,7 +36,7 @@
     "extension/Takealot-Assistant-Extension/shared/template_sync.js": "25422eb1e6844c81338b301926827edd",
     "extension/Takealot-Assistant-Extension/shared/utils.js": "db5c528e21f484614678067807cc5bf4",
     "extension/Takealot-Assistant-Extension/styles/openclaw_extension.css": "a0a456feca315a68f7c186e07d0a07d6",
-    "hermes-home/desktop-plugins/takealot-erp/plugin.js": "b4684c9096b3a425957ddff873835aba",
+    "hermes-home/desktop-plugins/takealot-erp/plugin.js": "88d5c154e268dcbad48821c1ba7b8f52",
     "hermes-home/plugins/takealot-erp/README.md": "d218627716f9fe4d4928c5622004577e",
     "hermes-home/plugins/takealot-erp/__init__.py": "4da90e38065efffff1f96651316dd85c",
     "hermes-home/plugins/takealot-erp/dashboard/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
@@ -49,7 +49,7 @@
     "hermes-home/plugins/takealot-erp/dashboard/data/takealot-categories.json": "5e1f810c424a78fda1f081199ed10e5b",
     "hermes-home/plugins/takealot-erp/dashboard/data/takealot_fees_official.json": "0873d6b3d88e6edc89e6fba20d346f3f",
     "hermes-home/plugins/takealot-erp/dashboard/manifest.json": "687e0765e1dfd5464b282f88c4797fad",
-    "hermes-home/plugins/takealot-erp/dashboard/plugin_api.py": "60abe932a5a290469a71febb6bd512f3",
+    "hermes-home/plugins/takealot-erp/dashboard/plugin_api.py": "c052db9dad7710247965eb48d39a910a",
     "hermes-home/plugins/takealot-erp/delivery/UPDATE-SPEC.md": "1ed8b052c4c1322c425261b92b2ae632",
     "hermes-home/plugins/takealot-erp/delivery/delivery_cfg.py": "57635dafb98349995f354a617903c6d8",
     "hermes-home/plugins/takealot-erp/delivery/selfupdate.py": "2ad05fbad3089ad86ace358a7f1ec057",
@@ -66,7 +66,7 @@
     "hermes-home/skills/takealot-erp-operator/SKILL.md": "6296f267c3b00a0fff2ff6a8b3f208c8"
   },
   "file_count": 51,
-  "notes": "【改了什么】\n\n1. 更新不再改动模型配置。之前每个更新包里都带着「模型通道配置」相关技能与脚本，更新后容易被 agent 当成待办去\n   「帮你配好模型」，结果把你手动配置的 provider / base_url / 默认模型覆盖掉。现在：\n   - 更新包不再包含模型配置技能；\n   - 更新规范与操作手册都写入了硬规矩：config.yaml 的 model:/providers: 段、.env 里的 key、base_url、默认模型\n     全部归你自己所有，agent 在任何情况下（含更新、排障）都不许修改，也不许运行模型配置脚本；\n   - 更新只换插件文件。模型如果报错，agent 只会把原始报错原文报给你，由你自己决定怎么改。\n2. 上一版的内容一并包含（累积包）：抓取成功后自动出 AI 价值评估（打开即见，同一商品 24 小时内不重复跑）；\n   成本按采购价填 ¥ 自动折 R（汇率/汇损预填可改、头程也按 ¥）；修了「汇损/头程填了不进计算」的问题；\n   表格金额不再折行；抓取深入分析改用商品链接/PLID（不再误报「通道未通」）；新增「毛利粗算」。\n\n【需要你做什么】\n\n1. 完全退出 Hermes 再重新打开。\n2. 如果你之前遇到过「模型配置被覆盖」，请把你自己那套配置改回来一次 —— 从本版起不会再被覆盖，也不需要再改第二次。\n3. 浏览器扩展无变化，不需要重新加载。已有的采集箱数据不会被清空。\n\n【怎么自证】\n\n1. 更新前后各看一次模型配置，应完全一致（值不变 = 没被覆盖）：\n   打开 <HERMES_HOME>\\config.yaml 看 model: 段，或执行 hermes config get model.provider\n2. 跑费率自检（应最后一行输出「差异 0 项」）：\n   & \"$env:LOCALAPPDATA\\hermes\\hermes-agent\\venv\\Scripts\\python.exe\" \"$env:LOCALAPPDATA\\hermes\\plugins\\takealot-erp\\delivery\\verify\\verify_fee_engine.py\"",
+  "notes": "【改了什么】\n1) 销售营业额口径修复（对数）：官方 /sales 的 selling_price 是「该行销售金额（行总额）」，不是单价。\n   原先后端 _order_rows 与前端各乘了一次 quantity，导致销售额虚高（真店 135 行实测 R211,333 vs 官方 R174,315，+21.4%）。\n   现改为直接采信行金额，单价仅用于展示（= 行金额 ÷ 件数）。真店实测：135 行 / 145 件 / 销售额 R174,315.00，\n   与官方后台近 30 天 Sales Value 一分不差。\n2) 跟价（调价）重构（按 docs/REPRICING-SPEC.md）：两个档位（不勾=手动点即写，勾上=自动巡检）；\n   删除试算闸门 / 两次点击上膛 / 双开关；下探幅度只按固定 ZAR 金额（不再有百分比）；\n   保本底价 Floor 与天花板价 Ceiling 为硬边界（触底/触顶不写平台，日志写明原因）；\n   有对手→目标=最低竞品价−下探幅度，无对手→抬到天花板价；\n   单条 listing 卡片照图重做（缩略图/TSIN/SKU/条码/标题 + 四个只读指标 + 三格输入 + 一行\"本次将调至\" + 一个主按钮 + 调价日志），\n   顶部批量用同一套字段，只作用于当前筛选/选中项；未选店铺的汇总视图仍禁止写入。\n3) 调价日志：每次动作都留痕，包括没写的（WROTE / SKIPPED / FAILED + 旧价→新价 + 平台回读价 + 原因）。\n\n【需要你做什么】\n1) Hermes 完全退出再重开（插件界面更新后需要重载）。\n2) 打开跟价页确认新界面：卡片上有「开启自动调价」勾选框、三格（保本底价 / 低于竞品下探幅度 / 天花板价）、\n   「保存并应用调价策略」按钮；底部有「调价日志」。\n3) 先拿一条不重要的 listing 试一次（点保存即写平台），确认日志出现 WROTE 且平台价格已变。\n4) 自动档默认关闭；要开就在卡片或顶部勾上「开启自动调价」，勾上后按内部节流自动巡检。\n\n【怎么自证】\n1) 销售额：打开订单/销售卡，销售额应为 R174,315.00（近 30 天，官方后台同值），件数 145、订单 135。\n2) 跟价写入：随便选一条 listing →「保存并应用调价策略」→ 卡片下方出现\n   「目标 R### → 平台回读 R### ✓」，并在「调价日志」里看到该 SKU 的 WROTE 行；\n   点开后台核对价格已变。\n3) 边界：把天花板价设成低于现价 → 日志出现 SKIPPED + 原因「超过天花板价（触顶）」，平台价格不动。\n4) 条数上限：单次最多写 10 条（可在高级参数改），超出的行日志写「超过单次上限」。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
