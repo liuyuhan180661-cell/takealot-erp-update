@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.09.26.2",
-  "released_at": "2026-09-26T23:30:59+08:00",
+  "version": "2026.09.26.3",
+  "released_at": "2026-09-26T23:36:52+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
-    "name": "Takealot-ERP-update-2026.09.26.2.zip",
-    "size": 1620338,
-    "md5": "8a55072d8fa9ae91ded72f0ed94b7d7d",
-    "sha256": "4381a1b03c94c5b99e0852c3b340d6520db7b9cbdc3225a57be7d36cfb882066"
+    "name": "Takealot-ERP-update-2026.09.26.3.zip",
+    "size": 1620554,
+    "md5": "00708768879251ef02f7d37a37acdfa5",
+    "sha256": "a6d4511cfb8b6e363e16c23b90d12ce18499c828f8a1a01bf1e1f12cfff9209c"
   },
   "files": {
     "extension/Takealot-Assistant-Extension/INSTALL.md": "4c29438760edce98422daa7148391c36",
@@ -66,11 +66,11 @@
     "hermes-home/skills/takealot-erp-buybox-watch/SKILL.md": "909b7e346102faed0e2d5d2e0811aea9",
     "hermes-home/skills/takealot-erp-buybox-watch/scripts/repricing_round.py": "0ec066c5ca6a85eb258f8cd3302dbb43",
     "hermes-home/skills/takealot-erp-operator/SKILL.md": "6296f267c3b00a0fff2ff6a8b3f208c8",
-    "hermes-home/skills/takealot-portal-cua/SKILL.md": "ecd57ea22daa3b8140cfd773eb17791c",
+    "hermes-home/skills/takealot-portal-cua/SKILL.md": "881bd3747dcdfc0218aff4526afc01f4",
     "hermes-home/skills/takealot-portal-cua/references/backpacks-required-attributes.md": "63af40e3350a09c99602279f0a3b5acf",
     "hermes-home/skills/takealot-portal-cua/references/bsk-setup.md": "9f2b8cfa94fb245877be929d5a8609ea",
-    "hermes-home/skills/takealot-portal-cua/references/pitfalls.md": "2ee35a820246207cbc60689b00b04c3f",
-    "hermes-home/skills/takealot-portal-cua/references/rich-input-routes.md": "02ac289030d32c10b31608b976fad1e2",
+    "hermes-home/skills/takealot-portal-cua/references/pitfalls.md": "0e3a0019876c8b37e158492b1e74e692",
+    "hermes-home/skills/takealot-portal-cua/references/rich-input-routes.md": "b19cf28596a9c0c2bda38d42a2028e84",
     "hermes-home/skills/takealot-portal-cua/references/rollback.md": "3f8f1fea3ed495052dc3e1dcc13c3532",
     "hermes-home/skills/takealot-portal-cua/references/self-healing.md": "9ad652ff740aa80ce80608f534c8b859",
     "hermes-home/skills/takealot-portal-cua/references/self-learning.md": "5839efac5786a1ec25fb336ece281383",
@@ -92,7 +92,7 @@
     "hermes-home/skills/takealot-portal-cua/templates/facts_C_memcard.json": "d1e088a615417f68d4b52255638d9f1a"
   },
   "file_count": 77,
-  "notes": "技能 takealot-portal-cua v1.5.0：依赖合同变化\n- CDP 加速件（tl-cdp-bridge 扩展）下线、不再交付：富文本只走 BrowserSkill 自带的 bsk press 逐字真实按键\n- 新增 references/bsk-setup.md：BrowserSkill 唯一依赖（官方仓库 github.com/Tencent/BrowserSkill）\n  + 三平台 CLI 安装命令 + 扩展商店链接 + 让 agent 自己按官方 AGENT_INSTALL.md 装的一句话\n  + bsk install-skill --harness hermes + 验收与失效恢复表\n- SKILL.md 顶部写死：不交付自制扩展、不打包 bsk 本体、唯一外部依赖=BrowserSkill\n- 清掉交付文档里早期「锚点/像素/四拍」设计残留（会被客户 agent 当指令读）\n- 实测：preflight.py 6/7 通过（唯一 FAIL=卖家后台登录过期，需人工登录一次）",
+  "notes": "portal-cua v1.5.0（措辞修正）：BrowserSkill 官方浏览器扩展是【必须件】——'不需要额外扩展' 指的是除它之外不用再装别的扩展。无功能变更。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
