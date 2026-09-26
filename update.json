@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.09.26.4",
-  "released_at": "2026-09-27T00:38:23+08:00",
+  "version": "2026.09.26.5",
+  "released_at": "2026-09-27T00:40:41+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery",
   "payload": {
-    "name": "Takealot-ERP-update-2026.09.26.4.zip",
-    "size": 1625245,
-    "md5": "176b008e5083d8c2144bcbc90a9a76bd",
-    "sha256": "2f8336f9bf979fa677e821079a00fe71d1a39f21a506862ed548055fc873ba82"
+    "name": "Takealot-ERP-update-2026.09.26.5.zip",
+    "size": 1625475,
+    "md5": "80b8c5567533f931b2bfd37292e66c86",
+    "sha256": "6ab7d16225d82c8742e7aef7484548eb7605717db950267537e2300fb0b37cde"
   },
   "files": {
     "extension/Takealot-Assistant-Extension/INSTALL.md": "4c29438760edce98422daa7148391c36",
@@ -66,7 +66,7 @@
     "hermes-home/skills/takealot-erp-buybox-watch/SKILL.md": "909b7e346102faed0e2d5d2e0811aea9",
     "hermes-home/skills/takealot-erp-buybox-watch/scripts/repricing_round.py": "0ec066c5ca6a85eb258f8cd3302dbb43",
     "hermes-home/skills/takealot-erp-operator/SKILL.md": "6296f267c3b00a0fff2ff6a8b3f208c8",
-    "hermes-home/skills/takealot-portal-cua/SKILL.md": "486e1bd7211a063eadbdd969f115dbe4",
+    "hermes-home/skills/takealot-portal-cua/SKILL.md": "ea077522a6b3f874206318f61cc72923",
     "hermes-home/skills/takealot-portal-cua/references/backpacks-required-attributes.md": "63af40e3350a09c99602279f0a3b5acf",
     "hermes-home/skills/takealot-portal-cua/references/bsk-setup.md": "9f2b8cfa94fb245877be929d5a8609ea",
     "hermes-home/skills/takealot-portal-cua/references/pitfalls.md": "c60cb29f0029b87e89c6ceeda2635155",
@@ -77,7 +77,7 @@
     "hermes-home/skills/takealot-portal-cua/scripts/README.md": "dc096dfc462aa953e00ece5a2fd6e94f",
     "hermes-home/skills/takealot-portal-cua/scripts/bskhelp.py": "4240926695288978e72b2af2fd248991",
     "hermes-home/skills/takealot-portal-cua/scripts/cors_http.py": "a9a1fc80646c62de907018ffb2605e2f",
-    "hermes-home/skills/takealot-portal-cua/scripts/create_listing.py": "81e3d9d7246e51084432aafab5885b18",
+    "hermes-home/skills/takealot-portal-cua/scripts/create_listing.py": "1384191fe1a286a28139d3131ecda3d1",
     "hermes-home/skills/takealot-portal-cua/scripts/diag_preview.py": "00878c9b7861d4edcb1082918b948d87",
     "hermes-home/skills/takealot-portal-cua/scripts/discover_fields.py": "7f0046661d7271f2eafa18022cd6d936",
     "hermes-home/skills/takealot-portal-cua/scripts/extract_listing.py": "ea611d534a2f81eca5b3507f6fe1385d",
@@ -92,7 +92,7 @@
     "hermes-home/skills/takealot-portal-cua/templates/facts_C_memcard.json": "d1e088a615417f68d4b52255638d9f1a"
   },
   "file_count": 77,
-  "notes": "更新 listing 自动化引擎：图片改为 URL 直塞（免下载）+ 计时更细 + 自愈/退步文档更新",
+  "notes": "listing 助手：报告文件名改为按 facts 文件（避免复制模板时两次跑互相覆盖）",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
