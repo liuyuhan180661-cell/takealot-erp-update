@@ -1,0 +1,98 @@
+{
+  "_注释": "平台商品图规格表。gallery=画廊主图位，detail=详情宽幅图位。out_px 为最终交付像素（本地后处理到精确值）。main_rules 写主图硬规则，供自检判定。",
+  "platforms": {
+    "takealot": {
+      "name": "Takealot",
+      "copy_lang": "English",
+      "bg": "white",
+      "gallery_gen": "1:1",
+      "gallery_out": [1500, 1500],
+      "detail_gen": "16:9",
+      "detail_out": [1500, 844],
+      "gallery_count": 5,
+      "detail_count": 5,
+      "main_rules": ["主图纯白背景", "主图无文字/无水印", "产品占画面约 85%", "无额外 logo"]
+    },
+    "emag": {
+      "name": "eMAG",
+      "copy_lang": "Romanian",
+      "bg": "white",
+      "gallery_gen": "1:1",
+      "gallery_out": [1500, 1500],
+      "detail_gen": "16:9",
+      "detail_out": [1500, 844],
+      "gallery_count": 5,
+      "detail_count": 5,
+      "main_rules": ["主图纯白背景", "主图无文字", "无边框水印"]
+    },
+    "ozon": {
+      "name": "Ozon",
+      "copy_lang": "Russian",
+      "bg": "white",
+      "gallery_gen": "2:3",
+      "gallery_out": [1200, 1600],
+      "detail_gen": "16:9",
+      "detail_out": [1500, 844],
+      "gallery_count": 5,
+      "detail_count": 5,
+      "main_rules": ["主图纯白背景", "主图无文字", "产品占画面 60%~90%"]
+    },
+    "custom": {
+      "name": "自定义",
+      "copy_lang": "English",
+      "bg": "white",
+      "gallery_gen": "1:1",
+      "gallery_out": [1024, 1024],
+      "detail_gen": "16:9",
+      "detail_out": [1500, 844],
+      "gallery_count": 0,
+      "detail_count": 0,
+      "main_rules": []
+    }
+  },
+  "ratios_px": {
+    "1:1": "1024x1024",
+    "4:5": "1024x1280",
+    "3:4": "1024x1365",
+    "2:3": "1024x1536",
+    "3:2": "1536x1024",
+    "16:9": "1536x864",
+    "9:16": "864x1536"
+  },
+  "shots": {
+    "gallery": [
+      { "key": "main",   "label": "白底主图",   "text": false, "bg_prompt": "a pure clean white seamless studio background, empty, no product, no object", "prompt": "on a pure clean {BG} background, product centered and filling about 85% of the frame, straight front view, professional e-commerce main product photo, crisp even studio lighting" },
+      { "key": "show",   "label": "产品展示图", "text": false, "bg_prompt": "an empty premium studio background with a soft neutral gradient and a subtle floor reflection area, no product, no object, soft even lighting", "prompt": "as an attractive product beauty shot on a soft neutral studio background with a subtle gradient and a gentle soft shadow, slightly angled composition, professional lighting" },
+      { "key": "scene",  "label": "场景图",     "text": true,  "bg_prompt": "an empty tasteful lifestyle scene background relevant to this product category, no product, no object, clear space in the centre for a product, soft natural light", "prompt": "placed into a natural, tasteful lifestyle scene relevant to this type of product, photorealistic, the product is the clear focus, soft natural light" },
+      { "key": "inuse",  "label": "使用场景",   "text": true,  "bg_prompt": "an empty realistic everyday environment background suitable for this product, no product, no object, clear middle area, natural lighting", "prompt": "shown being used in a realistic everyday context suitable for this product, photorealistic lifestyle photo, the product is the focus" },
+      { "key": "detail", "label": "细节特写",   "text": false, "bg_prompt": "a clean softly-lit minimal background with subtle depth of field, no product, no object", "prompt": "a close-up macro shot highlighting the material, texture and craftsmanship of the product, clean softly-lit background, shallow depth of field" }
+    ],
+    "detail": [
+      { "key": "d-hero",  "label": "主卖点",     "text": true,  "bg_prompt": "an empty wide cinematic modern gradient background, no product, no object, generous clean space, premium lighting", "prompt": "a wide cinematic hero banner featuring the exact product as the focus on a clean modern gradient background, premium e-commerce marketing layout with generous space for a headline" },
+      { "key": "d-sell1", "label": "卖点场景1",  "text": true,  "bg_prompt": "an empty wide lifestyle scene background relevant to this product category, no product, no object, clear centre space, soft depth of field", "prompt": "a wide lifestyle banner featuring the exact product in an appealing usage scene, premium e-commerce detail image, soft depth of field, space for text" },
+      { "key": "d-sell2", "label": "卖点场景2",  "text": true,  "bg_prompt": "an empty wide stylish surface background with complementary props and elegant lighting, no product, no object, clear centre space", "prompt": "a wide banner presenting the exact product on a stylish surface with complementary props, editorial e-commerce detail image, elegant lighting, space for text" },
+      { "key": "d-life",  "label": "生活方式",   "text": true,  "bg_prompt": "an empty wide warm living environment background with natural light, no product, no object, clear centre space", "prompt": "a wide lifestyle banner showing the exact product integrated into a real living environment, warm natural light, aspirational mood, space for text" },
+      { "key": "d-spec",  "label": "参数信息图", "text": false, "spec": true, "bg_prompt": "an empty wide light minimal background, no product, no object, thin divider space", "prompt": "as a wide clean modern e-commerce specification infographic: the exact product shown prominently on a light minimal background with tidy room for specification callouts and thin divider lines" }
+    ]
+  },
+  "fonts": {
+    "_注释": "字体解析顺序：skill assets/fonts/*.ttf → 系统字体 → Pillow 内置。CJK/西里尔目标市场建议放一个 Arial Unicode 或 Noto Sans 进 assets/fonts。",
+    "system_candidates": {
+      "darwin": [
+        "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
+        "/Library/Fonts/Arial Unicode.ttf",
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "/System/Library/Fonts/Helvetica.ttc"
+      ],
+      "win32": [
+        "C:/Windows/Fonts/arial.ttf",
+        "C:/Windows/Fonts/arialbd.ttf",
+        "C:/Windows/Fonts/segoeui.ttf"
+      ],
+      "linux": [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+      ]
+    }
+  }
+}
