@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.05.1",
-  "released_at": "2026-10-05T00:10:51+08:00",
+  "version": "2026.10.05.2",
+  "released_at": "2026-10-05T00:27:55+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.05.1.zip",
-    "size": 8194814,
-    "md5": "daa9782304be369190c2aa6e383552ce",
-    "sha256": "ed9e1e9f3e0896e7d2823795701f0911d9bfdafb333b6e195d4f1e9af70772e5"
+    "name": "Takealot-ERP-update-2026.10.05.2.zip",
+    "size": 8196356,
+    "md5": "419abde4b6f0cb13581602e5ac3660b0",
+    "sha256": "8b4e3c956460e90685caa807b6ef9ca6ab4eede79b8b1f27674d017dcb38e94a"
   },
   "files": {
     "CHECKLIST.md": "6e6cf1079dbea04caa27e3ba961ed33d",
@@ -23,11 +23,11 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "418c6bbf9956354d2a04b36cf2b5e328",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "2ebbe6a3c04b741e9c5add2b1e3bd863",
+    "payload/server/app.py": "8aec39f4b1498c662bc3a262ce159b39",
     "payload/server/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "payload/server/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
     "payload/server/bridge/start_bridge.bat": "6896c0dea66b143152cbd42f08ec0f0c",
-    "payload/server/cli.py": "0d174484d76f0eb5e22d369739b88bca",
+    "payload/server/cli.py": "67b515330b994bee3406818876da112e",
     "payload/server/core/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "payload/server/core/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
     "payload/server/core/bridge/start_bridge.bat": "6896c0dea66b143152cbd42f08ec0f0c",
@@ -45,7 +45,7 @@
     "payload/server/mcp_server.py": "8f6a12b353bdbf93c3235920277a5977",
     "payload/server/platform_ui.py": "40e32ce45cac708cd27337ce2360f884",
     "payload/server/requirements.txt": "42ad479896c11a5b341e0d06473836e9",
-    "payload/server/scheduler.py": "30e76d3c35031c2617e3cfd94d43270b",
+    "payload/server/scheduler.py": "ad858f8265f0af9c8994a3c5c3750ea5",
     "payload/ui/app.css": "73be37ff4aa5b2f3ef40d159af7eefc1",
     "payload/ui/host.js": "23942b0495ba84e85bbd514d8be4963a",
     "payload/ui/index.html": "b11a00e1e06dd410ae0da2723383a2a8",
@@ -100,7 +100,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 85,
-  "notes": "Windows 装机适配 + 内置定时任务（跑在客户机本机，零外部依赖）+ 客户端自更新通道 + v3 引导升级",
+  "notes": "定时任务：调度器心跳（在不在按点跑，界面/CLI 一眼可见）+ 自举多通道降级 + macOS 登录自启 + setup 拒绝半残包",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
