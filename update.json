@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.05.5",
-  "released_at": "2026-10-05T00:58:31+08:00",
+  "version": "2026.10.05.6",
+  "released_at": "2026-10-05T01:08:11+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.05.5.zip",
-    "size": 8208486,
-    "md5": "4d4d8bf866d7e76b145f11e2077002d9",
-    "sha256": "aaa8bde2c6633981fccbefa82058fbf94c68b2c896d372ad2bf4fc055d08cdc5"
+    "name": "Takealot-ERP-update-2026.10.05.6.zip",
+    "size": 8209930,
+    "md5": "5a63d90f18a98b6249003f1cb02ce029",
+    "sha256": "8b3811c32d7d850f11780b8a75e1a94627ea6e3ddbec7bb33bc68633c5ea5ac9"
   },
   "files": {
     "CHECKLIST.md": "6e6cf1079dbea04caa27e3ba961ed33d",
@@ -23,11 +23,11 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "418c6bbf9956354d2a04b36cf2b5e328",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "f58cabeb230c8c42e364ff20dbe8cf60",
+    "payload/server/app.py": "a3f26d0904737ceefa861c50e58887ab",
     "payload/server/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "payload/server/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
     "payload/server/bridge/start_bridge.bat": "6896c0dea66b143152cbd42f08ec0f0c",
-    "payload/server/cli.py": "7bd52b016ae8f8acab5f5698384573f1",
+    "payload/server/cli.py": "40739c28166a54e8f399e5a278af4666",
     "payload/server/core/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "payload/server/core/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
     "payload/server/core/bridge/start_bridge.bat": "6896c0dea66b143152cbd42f08ec0f0c",
@@ -46,7 +46,7 @@
     "payload/server/jobs/order_patrol.py": "7b3240a8af19c4da05c7010e3555e9cd",
     "payload/server/jobs/po_tracking.py": "09797293a65e2f9ea426cbed3eb07111",
     "payload/server/jobs/repricing_round.py": "591d407924d3221886a5fe553dc6068b",
-    "payload/server/mcp_server.py": "cd5a6b097141521fae26bdab5311ff6b",
+    "payload/server/mcp_server.py": "c8edd26f071fa0bcac5e26da1a9c9780",
     "payload/server/platform_ui.py": "40e32ce45cac708cd27337ce2360f884",
     "payload/server/requirements.txt": "42ad479896c11a5b341e0d06473836e9",
     "payload/server/scheduler.py": "ad858f8265f0af9c8994a3c5c3750ea5",
@@ -104,7 +104,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 89,
-  "notes": "定时任务 5 类（自动跟价/订单巡检/PO 跟踪/定时抓取/启动爬虫）接入自然语言路由 + MCP erp_jobs + skill 全面对齐 + 升级自动补新任务",
+  "notes": "erp_jobs 改为直接读本地状态（旧实例占端口不再 404）+ erp stop 清掉同 home 残留实例",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
