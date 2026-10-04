@@ -22,8 +22,17 @@ param(
 $ErrorActionPreference = "Stop"
 
 if (-not $Channel) { $Channel = $env:ERP_UPDATE_CHANNEL }
-if (-not $Channel) { $Channel = "https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/" }
-if (-not $Channel.EndsWith("/")) { $Channel = $Channel + "/" }
+$candidates = @()
+if ($Channel) {
+  $candidates = @($Channel)
+} else {
+  # Multi-channel fallback: raw.githubusercontent is often DNS-blocked in CN (getaddrinfo failed),
+  # so keep a CDN fallback. Override with -Channel or $env:ERP_UPDATE_CHANNEL (file:// works too).
+  $candidates = @(
+    "https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/",
+    "https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/"
+  )
+}
 
 if (-not $ErpHome) {
   $ErpHome = Join-Path $env:LOCALAPPDATA "TakealotERP"
@@ -40,9 +49,25 @@ function Get-Text([string]$url) {
 }
 
 Write-Host "== Takealot ERP update =="
-Write-Host "   channel: $Channel"
 
 try {
+  # 0) pick the first channel that answers
+  $picked = ""
+  foreach ($cand in $candidates) {
+    $c = $cand
+    if (-not $c.EndsWith("/")) { $c = $c + "/" }
+    try {
+      Get-Text ($c + "update.json") | Out-Null
+      $picked = $c
+      Write-Host "   channel: $picked"
+      break
+    } catch {
+      Write-Host "   channel unavailable, trying next: $c" -ForegroundColor DarkYellow
+    }
+  }
+  if (-not $picked) { throw "no channel served update.json - aborted, nothing installed" }
+  $Channel = $picked
+
   # 1) manifest
   $manifestText = Get-Text ($Channel + "update.json")
   $manifest = $manifestText | ConvertFrom-Json

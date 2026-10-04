@@ -12,12 +12,33 @@
 # 红线：**sha256 校验不过就退出**，磁盘一个字节都不动。
 set -e
 
-CHANNEL="${ERP_UPDATE_CHANNEL:-https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/}"
-[ -n "$CHANNEL" ] || { echo "没有通道地址：设 ERP_UPDATE_CHANNEL" >&2; exit 1; }
-case "$CHANNEL" in */) ;; *) CHANNEL="$CHANNEL/" ;; esac
-
 PY="${ERP_PYTHON:-$(command -v python3 || true)}"
 [ -n "$PY" ] || { echo "需要 python3（用来校验 sha256 与解析清单）" >&2; exit 1; }
+
+# 多通道降级：国内 raw 常被 DNS 抽风挡掉（实测报 getaddrinfo failed），留一个 CDN 兜底。
+# ERP_UPDATE_CHANNEL 可以覆盖（支持 file:// 本地自测）。
+if [ -n "${ERP_UPDATE_CHANNEL:-}" ]; then
+  CHANNELS="$ERP_UPDATE_CHANNEL"
+else
+  CHANNELS="https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/ \
+https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/"
+fi
+CHANNEL=""
+for C in $CHANNELS; do
+  case "$C" in */) ;; *) C="$C/" ;; esac
+  if "$PY" - "$C" <<'PYEOF' >/dev/null 2>&1
+import sys, urllib.request, pathlib
+url = sys.argv[1] + "update.json"
+if url.startswith("file://"):
+    pathlib.Path(url[7:]).read_bytes()
+else:
+    req = urllib.request.Request(url, headers={"User-Agent": "takealot-erp-bootstrap"})
+    urllib.request.urlopen(req, timeout=25).read()
+PYEOF
+  then CHANNEL="$C"; echo "   通道: $CHANNEL"; break; fi
+  echo "   通道不可用，换下一个: $C" >&2
+done
+[ -n "$CHANNEL" ] || { echo "所有通道都取不到 update.json，中止（什么都不装）" >&2; exit 1; }
 
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/erp-update.XXXXXX")"
 trap 'rm -rf "$TMP"' EXIT
