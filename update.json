@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.05.3",
-  "released_at": "2026-10-05T00:28:51+08:00",
+  "version": "2026.10.05.4",
+  "released_at": "2026-10-05T00:30:52+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.05.3.zip",
-    "size": 8196356,
-    "md5": "419abde4b6f0cb13581602e5ac3660b0",
-    "sha256": "8b4e3c956460e90685caa807b6ef9ca6ab4eede79b8b1f27674d017dcb38e94a"
+    "name": "Takealot-ERP-update-2026.10.05.4.zip",
+    "size": 8197039,
+    "md5": "7cdee4f8f2c38b20de86ef9810a5e246",
+    "sha256": "3af4e1d669eedc4d924b7b3678cc1d3f06e5e9b8fa8c1c56d827ee07526fa6e0"
   },
   "files": {
     "CHECKLIST.md": "6e6cf1079dbea04caa27e3ba961ed33d",
@@ -23,11 +23,11 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "418c6bbf9956354d2a04b36cf2b5e328",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "8aec39f4b1498c662bc3a262ce159b39",
+    "payload/server/app.py": "25fd1d3ff14bbaaf4c1edefebb590b7a",
     "payload/server/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "payload/server/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
     "payload/server/bridge/start_bridge.bat": "6896c0dea66b143152cbd42f08ec0f0c",
-    "payload/server/cli.py": "67b515330b994bee3406818876da112e",
+    "payload/server/cli.py": "413f2ced46cfcb13559a97115b0cfd16",
     "payload/server/core/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "payload/server/core/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
     "payload/server/core/bridge/start_bridge.bat": "6896c0dea66b143152cbd42f08ec0f0c",
@@ -100,7 +100,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 85,
-  "notes": "自更新：代理/中间人环境的 TLS 逃生口（ERP_UPDATE_INSECURE=1，包体仍过 sha256）+ 兼容 SSL_CERT_FILE",
+  "notes": "macOS 登录自启改为 launchd 托管 serve（服务不再神秘消失）+ 闸门忽略运行痕迹",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
