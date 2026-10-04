@@ -2,12 +2,12 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.05.2",
-  "released_at": "2026-10-05T00:27:55+08:00",
+  "version": "2026.10.05.3",
+  "released_at": "2026-10-05T00:28:51+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.05.2.zip",
+    "name": "Takealot-ERP-update-2026.10.05.3.zip",
     "size": 8196356,
     "md5": "419abde4b6f0cb13581602e5ac3660b0",
     "sha256": "8b4e3c956460e90685caa807b6ef9ca6ab4eede79b8b1f27674d017dcb38e94a"
@@ -100,7 +100,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 85,
-  "notes": "定时任务：调度器心跳（在不在按点跑，界面/CLI 一眼可见）+ 自举多通道降级 + macOS 登录自启 + setup 拒绝半残包",
+  "notes": "自更新：代理/中间人环境的 TLS 逃生口（ERP_UPDATE_INSECURE=1，包体仍过 sha256）+ 兼容 SSL_CERT_FILE",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
