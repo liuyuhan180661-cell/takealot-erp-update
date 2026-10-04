@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.05.8",
-  "released_at": "2026-10-05T01:46:21+08:00",
+  "version": "2026.10.05.9",
+  "released_at": "2026-10-05T01:51:33+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.05.8.zip",
-    "size": 8213420,
-    "md5": "a3e587c9aa2efef64b6b98ac4877374a",
-    "sha256": "16ccb041414ff080ab266a07ca1c9b84f164f840ec5f54d3965945ccf3df2f42"
+    "name": "Takealot-ERP-update-2026.10.05.9.zip",
+    "size": 8214018,
+    "md5": "f2554603e0c2496223ca8a1f2bde158d",
+    "sha256": "bd38ed1fadaeda17d0216a4872761bbf47a8d6ec4e76e2978144ed7c93a85c57"
   },
   "files": {
     "CHECKLIST.md": "6e6cf1079dbea04caa27e3ba961ed33d",
@@ -23,7 +23,7 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "418c6bbf9956354d2a04b36cf2b5e328",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "4df8a70cf00d96f2d6fb53078bab28dc",
+    "payload/server/app.py": "0a9f086df863da6d448b7ba37cc94dd0",
     "payload/server/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "payload/server/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
     "payload/server/bridge/start_bridge.bat": "6896c0dea66b143152cbd42f08ec0f0c",
@@ -41,11 +41,11 @@
     "payload/server/core/plugin_api.py": "1cd74533cde0dc48efeeebd33f588e68",
     "payload/server/jobs/_erpclient.py": "4623f8b28de228a5b09e9a76b28a05ff",
     "payload/server/jobs/buybox_report.py": "2ba95020ee0b0898df0cb61e01bbe021",
-    "payload/server/jobs/crawl_pull.py": "d33f5c0807f804b673edb6e85056a775",
+    "payload/server/jobs/crawl_pull.py": "f56054a3f93ee169cbd7a496f97fcb7b",
     "payload/server/jobs/logistics_patrol.py": "113a79c73da95130457bb690553042a1",
     "payload/server/jobs/order_patrol.py": "7b3240a8af19c4da05c7010e3555e9cd",
     "payload/server/jobs/po_tracking.py": "09797293a65e2f9ea426cbed3eb07111",
-    "payload/server/jobs/repricing_round.py": "10690fbd21d4dbac3c5012a03c85f64c",
+    "payload/server/jobs/repricing_round.py": "147792557a98141a250956af17b02bf7",
     "payload/server/mcp_server.py": "c8edd26f071fa0bcac5e26da1a9c9780",
     "payload/server/platform_ui.py": "40e32ce45cac708cd27337ce2360f884",
     "payload/server/requirements.txt": "42ad479896c11a5b341e0d06473836e9",
@@ -104,7 +104,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 89,
-  "notes": "定时抓取升级为闭环抓取：目录刷新 + 逐 TSIN 抓竞品 + 回看有多少条变得可跟价（竞品价是跟价的前提）",
+  "notes": "闭环抓取修正确切入口：/crawler/pull(按 PLID) 抓公开页 → /competitor/track 登记 → 候选出现竞品价；--plan 免授权可预览",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
