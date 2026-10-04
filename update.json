@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.05.10",
-  "released_at": "2026-10-05T02:05:57+08:00",
+  "version": "2026.10.05.11",
+  "released_at": "2026-10-05T02:14:24+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.05.10.zip",
-    "size": 8215152,
-    "md5": "2e5bd9c82a11330131acab48307eb54a",
-    "sha256": "061077f7424d2d800b11890f7dc928d5c500cc7c3835e98a842a6d81d9f5d12f"
+    "name": "Takealot-ERP-update-2026.10.05.11.zip",
+    "size": 8215995,
+    "md5": "d624c5cdf857b12228398766976947af",
+    "sha256": "713f1f9e9ebb0e2b14f4718f1db292869574bafeb8a285e5e7a0151b55318d6c"
   },
   "files": {
     "CHECKLIST.md": "6e6cf1079dbea04caa27e3ba961ed33d",
@@ -23,7 +23,7 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "418c6bbf9956354d2a04b36cf2b5e328",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "c4021041aee5241c4c84cf4c5d717d33",
+    "payload/server/app.py": "e4877b0e80225c62c1e781a5340cd8a1",
     "payload/server/bridge/README-bridge.md": "97af92c0b8714cef5c086e70904d9bc9",
     "payload/server/bridge/erp_bridge.py": "c004be33ffb287316e4aa4bebf80edf3",
     "payload/server/bridge/start_bridge.bat": "6896c0dea66b143152cbd42f08ec0f0c",
@@ -41,7 +41,7 @@
     "payload/server/core/plugin_api.py": "1cd74533cde0dc48efeeebd33f588e68",
     "payload/server/jobs/_erpclient.py": "4623f8b28de228a5b09e9a76b28a05ff",
     "payload/server/jobs/buybox_report.py": "2ba95020ee0b0898df0cb61e01bbe021",
-    "payload/server/jobs/crawl_pull.py": "5ebd2198320289df84696308f88f8a51",
+    "payload/server/jobs/crawl_pull.py": "ee1de50632621800c9ed86182ccacc3f",
     "payload/server/jobs/logistics_patrol.py": "113a79c73da95130457bb690553042a1",
     "payload/server/jobs/order_patrol.py": "7b3240a8af19c4da05c7010e3555e9cd",
     "payload/server/jobs/po_tracking.py": "09797293a65e2f9ea426cbed3eb07111",
@@ -104,7 +104,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 89,
-  "notes": "写价闭环实测通过（真店真改价 + 平台回读）；独立回读改读审计日志实时值（修掉误报未验证）；AGENTS.md 与新机制一致（对话授权例外）；新增 api_raw/dryrun_publish 诊断脚本",
+  "notes": "抓取不再二次返工：默认走爬虫 5 天缓存（只有 --force 才重抓）；「抓过且确认无竞品」的 SKU 加冷却（默认 3 天）不重复抓",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
