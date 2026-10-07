@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.07.5",
-  "released_at": "2026-10-07T14:32:04+08:00",
+  "version": "2026.10.07.6",
+  "released_at": "2026-10-07T14:42:53+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.07.5.zip",
-    "size": 8553840,
-    "md5": "314281265f2de9bc57b3f801ee3ebff4",
-    "sha256": "5688e295797555afb50936708d7fb529d087fa9ddd409e7c877e1e2ecf5a3ae9"
+    "name": "Takealot-ERP-update-2026.10.07.6.zip",
+    "size": 8554120,
+    "md5": "16bd6e318abc9f1764715f5ac008f45a",
+    "sha256": "eff86924a6c8474e19d3f30d6dbb89603d5c57bb9b2f85f44c2a55498e9bf425"
   },
   "files": {
     "CHECKLIST.md": "6e6cf1079dbea04caa27e3ba961ed33d",
@@ -19,7 +19,7 @@
     "install.ps1": "22498877bd1fb97fa8d47bae1c14e9ff",
     "install.sh": "3b717df1d269ddf03085f7fada8b2c1c",
     "migrate_v2_state.py": "cecd434cfe054982b7576cc2c6a3386f",
-    "payload/VERSION": "a00f6e9626485816857ddd23d1652e84",
+    "payload/VERSION": "aad21ba6e59fef93e09946b83e378ba4",
     "payload/agent/AGENTS.md": "f651c06ab31cadc82d4ea9b0b7a4bd0c",
     "payload/agent/skills/takealot-erp-buybox-watch/SKILL.md": "456d0dc5c4ed4f4ba5fd96f815c8e8e6",
     "payload/agent/skills/takealot-erp-buybox-watch/scripts/repricing_round.py": "591d407924d3221886a5fe553dc6068b",
@@ -30,11 +30,11 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "418c6bbf9956354d2a04b36cf2b5e328",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "6848a1d2e837972c02e929e3c7aba6b1",
+    "payload/server/app.py": "e5466ad82e32c5a7e32bb101b9aa13a7",
     "payload/server/bridge/README-bridge.md": "a2815ddacddfc78daa89402b7a1a835b",
     "payload/server/bridge/erp_bridge.py": "c902eac19a618a495b08ced5b7b36d0b",
     "payload/server/bridge/start_bridge.bat": "b4acf09afc7431c7b7f0374b1a858beb",
-    "payload/server/cli.py": "06a14d9a16f14fe59e6a21bca0ea5132",
+    "payload/server/cli.py": "d23f2b0829ae9ef73b5c6451840db517",
     "payload/server/core/bridge/README-bridge.md": "a2815ddacddfc78daa89402b7a1a835b",
     "payload/server/core/bridge/erp_bridge.py": "c902eac19a618a495b08ced5b7b36d0b",
     "payload/server/core/bridge/start_bridge.bat": "b4acf09afc7431c7b7f0374b1a858beb",
@@ -113,7 +113,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 98,
-  "notes": "自更新通道加实时反代（raw/jsDelivr 被 CDN 缓存压住时也能拿到刚发布的版本）+ 清单请求加防缓存时间戳；安装器不再被 file:// 内网通道的查询串绊倒。",
+  "notes": "自更新可靠性：① 包体改为在所有通道里挑第一个能下且 sha256 对得上的（国内常见 raw 能取小清单、8MB 包体被掐断，以前会卡死升级）；② 更新通道加实时反代降级（raw/jsDelivr 被缓存压住时也能拿到刚发布的版本）；③ 出包闸门改成缺 PASS 即中止，不再放过失败项。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
