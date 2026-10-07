@@ -27,9 +27,12 @@ if ($Channel) {
   $candidates = @($Channel)
 } else {
   # Multi-channel fallback: raw.githubusercontent is often DNS-blocked in CN (getaddrinfo failed),
-  # so keep a CDN fallback. Override with -Channel or $env:ERP_UPDATE_CHANNEL (file:// works too).
+  # and both raw and jsDelivr can serve a CDN-cached copy of a just-published update for hours.
+  # gh-proxy / ghfast are live reverse proxies: reachable from CN and never stale.
   $candidates = @(
     "https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/",
+    "https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/",
+    "https://ghfast.top/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/",
     "https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/"
   )
 }

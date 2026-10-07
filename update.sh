@@ -21,6 +21,8 @@ if [ -n "${ERP_UPDATE_CHANNEL:-}" ]; then
   CHANNELS="$ERP_UPDATE_CHANNEL"
 else
   CHANNELS="https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/ \
+https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/ \
+https://ghfast.top/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/ \
 https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/"
 fi
 CHANNEL=""
