@@ -10,6 +10,22 @@ import os
 import sys
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#: 产品配置（v3 现状：交付目录叫 Takealot-ERP-Delivery-v3、paths 指产品真源）
+PRODUCT_CONFIG = os.path.join(ROOT_DIR, "products", "takealot-erp", "delivery.config.json")
+
+
+def _default_config_path() -> str:
+    """默认用**产品**配置。
+
+    仓库根那份 ``delivery.config.json`` 是 v2 遗留（``deliveryDir`` 还叫
+    ``Takealot-ERP-Delivery``、paths 指 Windows 构建机的旧布局）。拿它去发布 v3 包，
+    会在 ``包里找不到 MANIFEST.md5`` 处失败 —— 真机踩过（发布脚本读的是包内
+    ``<deliveryDir>/MANIFEST.md5``，名字对不上就等于没找到）。根配置仍可显式指定：
+    ``DELIVERY_CONFIG=...`` 或 ``--config``。
+    """
+    if os.path.isfile(PRODUCT_CONFIG):
+        return PRODUCT_CONFIG
+    return os.path.join(ROOT_DIR, "delivery.config.json")
 
 
 def _arg_config(argv=None):
@@ -22,7 +38,7 @@ def _arg_config(argv=None):
 
 
 def load(argv=None) -> dict:
-    path = os.environ.get("DELIVERY_CONFIG") or _arg_config(argv) or os.path.join(ROOT_DIR, "delivery.config.json")
+    path = os.environ.get("DELIVERY_CONFIG") or _arg_config(argv) or _default_config_path()
     with open(path, encoding="utf-8") as fh:
         cfg = json.load(fh)
     cfg["_config_path"] = path
