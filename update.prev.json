@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.07.12",
-  "released_at": "2026-10-07T17:20:51+08:00",
+  "version": "2026.10.07.13",
+  "released_at": "2026-10-07T17:23:10+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.07.12.zip",
-    "size": 8564015,
-    "md5": "188d026f131347679044ae9229a141fe",
-    "sha256": "59bf709463799fe90c061df8bdd08020fb1aec795d38e703168f83b978d2bbee"
+    "name": "Takealot-ERP-update-2026.10.07.13.zip",
+    "size": 8564116,
+    "md5": "67ba8bf7221859283344d86b864346c3",
+    "sha256": "55236f6bd1d34d98ec53d595e0ebc60d9014d4d02ca404732d1f16a03d7d38b5"
   },
   "files": {
     "CHECKLIST.md": "5344e15ea083cb5c468b1d9567da1a2f",
@@ -19,7 +19,7 @@
     "install.ps1": "22498877bd1fb97fa8d47bae1c14e9ff",
     "install.sh": "3b717df1d269ddf03085f7fada8b2c1c",
     "migrate_v2_state.py": "cecd434cfe054982b7576cc2c6a3386f",
-    "payload/VERSION": "3551e6e4b068fd48ae8c214f38518856",
+    "payload/VERSION": "217b846262e52b4117edb8d7ad0598fb",
     "payload/agent/AGENTS.md": "f651c06ab31cadc82d4ea9b0b7a4bd0c",
     "payload/agent/skills/takealot-erp-buybox-watch/SKILL.md": "456d0dc5c4ed4f4ba5fd96f815c8e8e6",
     "payload/agent/skills/takealot-erp-buybox-watch/scripts/repricing_round.py": "591d407924d3221886a5fe553dc6068b",
@@ -31,7 +31,7 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "418c6bbf9956354d2a04b36cf2b5e328",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "17870970e5c36584c413a5d4691fa35c",
+    "payload/server/app.py": "cbd3feff0e27dba8a59fd58b0b9f470b",
     "payload/server/bridge/README-bridge.md": "a2815ddacddfc78daa89402b7a1a835b",
     "payload/server/bridge/erp_bridge.py": "c902eac19a618a495b08ced5b7b36d0b",
     "payload/server/bridge/start_bridge.bat": "b4acf09afc7431c7b7f0374b1a858beb",
@@ -61,7 +61,7 @@
     "payload/ui/app.css": "73be37ff4aa5b2f3ef40d159af7eefc1",
     "payload/ui/host.js": "23942b0495ba84e85bbd514d8be4963a",
     "payload/ui/index.html": "b11a00e1e06dd410ae0da2723383a2a8",
-    "payload/ui/plugin.js": "87cb329d755910df66bf4046110d24b0",
+    "payload/ui/plugin.js": "564541cafe2eeded2c54ca4181b8b3be",
     "payload/ui/shell.js": "63820a0cd769b566d0ef614104e22f13",
     "payload/ui/tokens.css": "92675476c96a99e8411b117254fa4d20",
     "payload/ui/vendor/app.css": "28944c88ca683317a03c9841d455403b",
@@ -114,7 +114,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 99,
-  "notes": "客户机自证验收：scripts/seed_old_skills.py check 逐字节比对 Hermes 侧技能与包内副本（Windows 真机已验证 .10→.11 覆盖成功，4 个技能全一致）；修 GBK 控制台崩溃、不写死技能名",
+  "notes": "界面文案对齐：状态栏改「手工写操作在界面 · 自动调价需你授权（对话里授权，或勾上跟价页的「开启自动调价」）」；「开启自动调价」的提示写清授权语义（勾上=授权+常驻巡检、取消=撤回）",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
