@@ -25,9 +25,14 @@ BOOTSTRAP 引导说明（全新机器 / 已装机器接上自更新）
    (平台 win_amd64)，当前是 cpXXX"。Windows 装机必须是 **Python 3.12（64 位）**，32 位/3.13+/alpha 都不行）：
 
    ① 看现状：`python -V` 与 `python -c "import sys,sysconfig;print(sys.maxsize>2**32, sysconfig.get_platform())"`
-   ② 装对的 Python（用户级、免管理员，一条）：
-      `winget install --id Python.Python.3.12 --scope user --silent --accept-package-agreements --accept-source-agreements`
-      （没有 winget → 让用户去 python.org 下 3.12 的 Windows installer (64-bit)，勾 Add python.exe to PATH）
+   ② 装对的 Python —— **别用 winget**（实测会打印"成功安装"但磁盘/注册表里什么都没有）。
+      用官方直装包 + 国内镜像（逐条粘，用户级、免管理员）：
+      `$u = "https://mirrors.aliyun.com/python-release/windows/python-3.12.10-amd64.exe"`
+      `curl.exe -fsSL --max-time 600 -o "$env:TEMP\py312.exe" $u`
+      `(Get-Item "$env:TEMP\py312.exe").Length`      # 期望 26964224，不是这个数就回传、别继续
+      `Start-Process "$env:TEMP\py312.exe" -ArgumentList '/quiet','InstallAllUsers=0','PrependPath=1','Include_launcher=1','Include_test=0' -Wait`
+      `& "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe" -V`     # 期望 Python 3.12.10
+      镜像不通 → 换官方原站同文件：`https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe`（同大小，已核）
    ③ 删掉上次建坏的环境（**只删 venv，别删 TakealotERP**，state 里是店铺/密钥/账本）：
       `Remove-Item -Recurse -Force "$env:LOCALAPPDATA\TakealotERPenv"`
    ④ 从通道重装（与第 0 步同一条，gh-proxy 优先）
@@ -36,10 +41,10 @@ BOOTSTRAP 引导说明（全新机器 / 已装机器接上自更新）
 2) 已装机器（Hermes 插件形态 / 老装机）接上自更新：
 客户机上的 Hermes agent（或你自己）按下面三步走，之后就能一直自己更新：
 
-   a) 下载更新器（三个链接哪个通就用哪个；202610082026 那段是防止 CDN 缓存压住新版本的，原样带上）
-   https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610082026
-   https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610082026
-   https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/selfupdate.py?cb=202610082026
+   a) 下载更新器（三个链接哪个通就用哪个；202610082052 那段是防止 CDN 缓存压住新版本的，原样带上）
+   https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610082052
+   https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610082052
+   https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/selfupdate.py?cb=202610082052
    放到： %LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py
 
    b) 只检查、不动文件（把所有结果念给用户）

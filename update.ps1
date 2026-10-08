@@ -161,18 +161,43 @@ try {
   $payload = Split-Path (Split-Path $cli.FullName -Parent) -Parent
 
   # 5) hand off to the new package's setup (idempotent: stops service, swaps files, restarts, self-checks)
-  $runner = Join-Path $ErpHome "venv\Scripts\python.exe"
-  if (-not (Test-Path $runner)) {
-    $runner = (Get-Command python -ErrorAction SilentlyContinue).Source
+  #    Which interpreter runs setup matters: if we run setup *from the ERP venv we are about to
+  #    rebuild*, Windows cannot delete the in-use python.exe and the rebuild leaves a gutted venv
+  #    (measured on a real customer box). So probe real interpreters first, the venv copy LAST.
+  $runnerCands = New-Object System.Collections.Generic.List[string]
+  foreach ($root in @("$env:LOCALAPPDATA\Programs\Python", "$env:ProgramFiles", "C:\")) {
+    if ($root -and (Test-Path $root)) {
+      Get-ChildItem -Path $root -Filter "Python3*" -Directory -ErrorAction SilentlyContinue |
+        Sort-Object Name -Descending | ForEach-Object {
+          $exe = Join-Path $_.FullName "python.exe"
+          if (Test-Path $exe) { $runnerCands.Add($exe) }
+        }
+    }
   }
-  if (-not $runner) { throw "no python found (install Python 3.10+ or point ERP_HOME at an existing install)" }
+  $onPath = (Get-Command python -ErrorAction SilentlyContinue).Source
+  if ($onPath) { $runnerCands.Add($onPath) }
+  $venvPy = Join-Path $ErpHome "venv\Scripts\python.exe"
+  if (Test-Path $venvPy) { $runnerCands.Add($venvPy) }   # last resort: may be the one being rebuilt
+
+  $runner = ""
+  foreach ($c in $runnerCands) {
+    if (-not $c) { continue }
+    $ok = $false
+    try {
+      & $c -c "import sys" 2>$null | Out-Null
+      $ok = ($LASTEXITCODE -eq 0)
+    } catch { $ok = $false }
+    if ($ok) { $runner = $c; break }
+  }
+  if (-not $runner) { throw "no working python found (install Python 3.10+ and re-run)" }
+  Write-Host "   python: $runner"
 
   Write-Host "== installing into $ErpHome =="
   # same PS 5.1 trap as above: cli.py writes progress to stderr, and a native command's
   # stderr under EAP='Stop' would abort us before we can read the exit code.
   $eap2 = $ErrorActionPreference
   $ErrorActionPreference = "Continue"
-  & $runner $cli.FullName setup --source $payload --erp-home $ErpHome --offline
+  & $runner $cli.FullName setup --source $payload --erp-home $ErpHome --offline --python $runner
   $rc = $LASTEXITCODE
   $ErrorActionPreference = $eap2
 
