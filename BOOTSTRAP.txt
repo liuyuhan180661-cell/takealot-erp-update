@@ -37,17 +37,17 @@ BOOTSTRAP 引导说明（全新机器 / 已装机器接上自更新）
       `& "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe" -V`     # 期望 Python 3.12.10
       镜像不通 → 换官方原站同文件：`https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe`（同大小，已核）
    ③ 删掉上次建坏的环境（**只删 venv，别删 TakealotERP**，state 里是店铺/密钥/账本）：
-      `Remove-Item -Recurse -Force "$env:LOCALAPPDATA\TakealotERPenv"`
+      `Remove-Item -Recurse -Force "$env:LOCALAPPDATA\TakealotERP\venv"`
    ④ 从通道重装（与第 0 步同一条，gh-proxy 优先）
    ⑤ 判据：最后一行必须是 `RESULT 13/13 PASS`；不是就把整段输出原样回传，别自己解释
 
 2) 已装机器（Hermes 插件形态 / 老装机）接上自更新：
 客户机上的 Hermes agent（或你自己）按下面三步走，之后就能一直自己更新：
 
-   a) 下载更新器（三个链接哪个通就用哪个；202610082109 那段是防止 CDN 缓存压住新版本的，原样带上）
-   https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610082109
-   https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610082109
-   https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/selfupdate.py?cb=202610082109
+   a) 下载更新器（三个链接哪个通就用哪个；202610082110 那段是防止 CDN 缓存压住新版本的，原样带上）
+   https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610082110
+   https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610082110
+   https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/selfupdate.py?cb=202610082110
    放到： %LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py
 
    b) 只检查、不动文件（把所有结果念给用户）
