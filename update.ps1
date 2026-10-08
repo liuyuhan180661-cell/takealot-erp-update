@@ -80,20 +80,61 @@ try {
   if (-not $name) { throw "update.json has no payload.name" }
   Write-Host "   package: $name ($remote)"
 
-  # 2) download
+  # 2) download the body.
+  #    Manifest and body pick their channel SEPARATELY: on CN networks raw often serves the
+  #    small update.json fine while the ~8 MB body stalls at 0 bytes forever (measured on a
+  #    Win10 box: raw body = no data, gh-proxy = 1.4 MB/s). One channel for both = the
+  #    upgrade hangs until timeout. Try every channel in order; accept the first body that
+  #    downloads completely AND matches sha256; fail closed if none does.
+  #    Per-channel budget is 120s so a stalled channel hands over quickly instead of
+  #    keeping the user waiting ~15 minutes.
+  $BodyTimeout = 120
+  $curlExe = Join-Path $env:SystemRoot "System32\curl.exe"
+  $bodyCandidates = @($Channel)
+  foreach ($cand in $candidates) {
+    $c = $cand
+    if (-not $c.EndsWith("/")) { $c = $c + "/" }
+    if ($c -ne $Channel) { $bodyCandidates += $c }
+  }
   $zipPath = Join-Path $tmp $name
-  if ($Channel.StartsWith("file://")) {
-    Copy-Item ($Channel.Substring(7) + $name) $zipPath
-  } else {
-    Invoke-WebRequest -Uri ($Channel + $name) -OutFile $zipPath -UseBasicParsing -TimeoutSec 900
+  $bodyUsed = ""
+  $mismatch = ""
+  foreach ($cand in $bodyCandidates) {
+    if (Test-Path $zipPath) { Remove-Item -Force $zipPath }
+    try {
+      if ($cand.StartsWith("file://")) {
+        Copy-Item ($cand.Substring(7) + $name) $zipPath
+      } elseif (Test-Path $curlExe) {
+        & $curlExe -fsSL --max-time $BodyTimeout ($cand + $name) -o $zipPath
+        if ($LASTEXITCODE -ne 0) { throw "curl exit $LASTEXITCODE" }
+      } else {
+        Invoke-WebRequest -Uri ($cand + $name) -OutFile $zipPath -UseBasicParsing -TimeoutSec $BodyTimeout
+      }
+    } catch {
+      Write-Host "   body channel failed, trying next: $cand" -ForegroundColor DarkYellow
+      continue
+    }
+    $gotSha = (Get-FileHash -Algorithm SHA256 -Path $zipPath).Hash.ToLower()
+    if ($wantSha -and ($gotSha -ne $wantSha.ToLower())) {
+      $mismatch = "want $wantSha got $gotSha"
+      Write-Host "   sha256 mismatch from this channel, trying next: $cand" -ForegroundColor DarkYellow
+      continue
+    }
+    $bodyUsed = $cand
+    break
   }
 
   # 3) verify (fail closed)
-  $gotSha = (Get-FileHash -Algorithm SHA256 -Path $zipPath).Hash.ToLower()
-  if ($wantSha -and ($gotSha -ne $wantSha.ToLower())) {
-    Write-Host "   SHA256 MISMATCH - aborted, nothing was installed" -ForegroundColor Red
+  if (-not $bodyUsed) {
+    if ($mismatch) {
+      Write-Host "   SHA256 MISMATCH on every channel - aborted, nothing was installed" -ForegroundColor Red
+      Write-Host "   $mismatch" -ForegroundColor Red
+    } else {
+      Write-Host "   no channel delivered the package - aborted, nothing was installed" -ForegroundColor Red
+    }
     exit 1
   }
+  Write-Host "   body: $bodyUsed"
   Write-Host "   sha256: OK"
 
   # 4) extract

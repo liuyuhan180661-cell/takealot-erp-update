@@ -30,20 +30,20 @@ fi
 # urllib 会在 TLS 握手就报 CERTIFICATE_VERIFY_FAILED/_ssl.c: unable to get local issuer certificate ->
 # 四个通道全被判"不可用"，脚本报"所有通道都取不到 update.json"——而 curl 同时刻是通的。
 # 这不是"网络不通"，所以必须让 curl 先试；python 兜底时再自己找一份 CA。
-#   fetch <url> [out]   out 省略 = 只探测（丢弃内容）
+#   fetch <url> [out] [timeout_s]   out 省略 = 只探测（丢弃内容）
 fetch() {
-  _url="$1"; _out="${2:-}"
+  _url="$1"; _out="${2:-}"; _to="${3:-60}"
   case "$_url" in
     file://*) if [ -n "$_out" ]; then cp "${_url#file://}" "$_out"; else [ -f "${_url#file://}" ]; fi; return $? ;;
   esac
   if [ -z "${ERP_NO_CURL:-}" ] && command -v curl >/dev/null 2>&1; then
-    if [ -n "$_out" ]; then curl -fsSL --max-time 60 "$_url" -o "$_out"
+    if [ -n "$_out" ]; then curl -fsSL --max-time "$_to" "$_url" -o "$_out"
     else curl -fsS --max-time 25 -o /dev/null "$_url"; fi
     return $?
   fi
-  "$PY" - "$_url" "$_out" <<'PYEOF'
-import sys, ssl, os, urllib.request, pathlib, tempfile
-url, out = sys.argv[1], sys.argv[2]
+  "$PY" - "$_url" "$_out" "$_to" <<'PYEOF'
+import sys, ssl, os, urllib.request, pathlib
+url, out, to = sys.argv[1], sys.argv[2], float(sys.argv[3] or 60)
 ctx = None
 try:
     import certifi
@@ -61,7 +61,7 @@ if ctx is None or ctx.cert_store_stats().get("x509_ca", 0) == 0:
                      "export SSL_CERT_FILE=<ca-bundle 路径> 后重试\n")
     sys.exit(2)
 req = urllib.request.Request(url, headers={"User-Agent": "takealot-erp-bootstrap"})
-data = urllib.request.urlopen(req, timeout=30, context=ctx).read()
+data = urllib.request.urlopen(req, timeout=to, context=ctx).read()
 pathlib.Path(out).write_bytes(data) if out else None
 PYEOF
 }
@@ -99,16 +99,31 @@ SHA="$(cut -f2 "$TMP/meta")"
 REMOTE="$(cut -f3 "$TMP/meta")"
 [ -n "$NAME" ] || { echo "清单里没有 payload.name，中止" >&2; exit 1; }
 
-# 3) 下载（curl 优先，python 兜底 —— 与探测/清单同一套；失败即中止）
+# 3) 下载包体 + 4) 校验：**所有通道逐个试，取第一个"下完且 sha256 对得上"的**。
+#    为什么不能只认清单那条通道：国内实测清单（小文件）能过、8MB 包体卡在 0 字节
+#    （raw：无数据；gh-proxy：1.4 MB/s）。只认一条 = 升级挂死。
+#    每条通道 120s 预算，停滞就换下一条；每一份都过 sha256，安全底线不变；全不通过就什么都不装。
 printf '   包体: %s（%s）\n' "$NAME" "$REMOTE"
-fetch "${CHANNEL}${NAME}" "$TMP/$NAME" || { echo "包体下载失败，中止（什么都不装）" >&2; exit 1; }
-
-# 4) 校验（不通过就退出，什么都不动）
-GOT="$("$PY" -c "import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "$TMP/$NAME")"
-if [ -n "$SHA" ] && [ "$GOT" != "$SHA" ]; then
-  echo "   ⚠️ sha256 不匹配，**已中止，没有安装**（want ${SHA%${SHA#????????????}}… got ${GOT%${GOT#????????????}}…）" >&2
+BODY_USED=""; MISMATCH=""; GOT=""
+for C in $CHANNELS; do
+  case "$C" in */) ;; *) C="$C/" ;; esac
+  rm -f "$TMP/$NAME"
+  fetch "${C}${NAME}" "$TMP/$NAME" 120 || { echo "   包体：这条通道下不下来，换下一个 $C" >&2; continue; }
+  GOT="$("$PY" -c "import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "$TMP/$NAME")"
+  if [ -n "$SHA" ] && [ "$GOT" != "$SHA" ]; then
+    MISMATCH="$GOT"; echo "   包体：这条通道 sha256 不对，换下一个 $C" >&2; continue
+  fi
+  BODY_USED="$C"; break
+done
+[ -n "$BODY_USED" ] || {
+  if [ -n "$MISMATCH" ]; then
+    echo "   ⚠️ 所有通道的 sha256 都不匹配，**已中止，没有安装**（want ${SHA%${SHA#????????????}}… got ${MISMATCH%${MISMATCH#????????????}}…）" >&2
+  else
+    echo "   ⚠️ 所有通道都下不下包体，**已中止，没有安装**" >&2
+  fi
   exit 1
-fi
+}
+echo "   包体通道: $BODY_USED"
 echo "   校验: OK"
 
 # 5) 解压 → 用新包自己的 setup 覆盖安装（幂等，会先停服务再换文件再起服务）
