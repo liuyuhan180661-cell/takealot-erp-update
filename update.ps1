@@ -110,7 +110,7 @@ try {
     $ErrorActionPreference = "Continue"
     try {
       if ($cand.StartsWith("file://")) {
-        Copy-Item ($cand.Substring(7) + $name) $zipPath
+        Copy-Item ($cand.Substring(7) + $name) $zipPath -ErrorAction Stop
         $rc = 0
       } elseif (Test-Path $curlExe) {
         & $curlExe -fsSL --max-time $BodyTimeout ($cand + $name) -o $zipPath 2>&1 | Out-Null
