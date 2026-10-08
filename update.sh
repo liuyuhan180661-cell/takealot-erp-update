@@ -25,19 +25,51 @@ https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takea
 https://ghfast.top/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/ \
 https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/"
 fi
+# 取 URL 的小工具：**curl 优先**，python 兜底。
+# 为什么不是只用 python：Homebrew / 源码装的 python3 常带不信任库可用（实测 ssl CA count = 0），
+# urllib 会在 TLS 握手就报 CERTIFICATE_VERIFY_FAILED/_ssl.c: unable to get local issuer certificate ->
+# 四个通道全被判"不可用"，脚本报"所有通道都取不到 update.json"——而 curl 同时刻是通的。
+# 这不是"网络不通"，所以必须让 curl 先试；python 兜底时再自己找一份 CA。
+#   fetch <url> [out]   out 省略 = 只探测（丢弃内容）
+fetch() {
+  _url="$1"; _out="${2:-}"
+  case "$_url" in
+    file://*) if [ -n "$_out" ]; then cp "${_url#file://}" "$_out"; else [ -f "${_url#file://}" ]; fi; return $? ;;
+  esac
+  if [ -z "${ERP_NO_CURL:-}" ] && command -v curl >/dev/null 2>&1; then
+    if [ -n "$_out" ]; then curl -fsSL --max-time 60 "$_url" -o "$_out"
+    else curl -fsS --max-time 25 -o /dev/null "$_url"; fi
+    return $?
+  fi
+  "$PY" - "$_url" "$_out" <<'PYEOF'
+import sys, ssl, os, urllib.request, pathlib, tempfile
+url, out = sys.argv[1], sys.argv[2]
+ctx = None
+try:
+    import certifi
+    ctx = ssl.create_default_context(cafile=certifi.where())
+except Exception:
+    for cand in (os.environ.get("SSL_CERT_FILE"),
+                 "/etc/ssl/cert.pem",                       # macOS 系统信任库
+                 "/usr/local/etc/openssl@3/cert.pem",       # Homebrew openssl@3
+                 "/etc/pki/tls/certs/ca-bundle.crt"):       # RHEL 系
+        if cand and os.path.exists(cand):
+            ctx = ssl.create_default_context(cafile=cand)
+            break
+if ctx is None or ctx.cert_store_stats().get("x509_ca", 0) == 0:
+    sys.stderr.write("python 找不到可用的 CA（curl 也不可用）-> "
+                     "export SSL_CERT_FILE=<ca-bundle 路径> 后重试\n")
+    sys.exit(2)
+req = urllib.request.Request(url, headers={"User-Agent": "takealot-erp-bootstrap"})
+data = urllib.request.urlopen(req, timeout=30, context=ctx).read()
+pathlib.Path(out).write_bytes(data) if out else None
+PYEOF
+}
+
 CHANNEL=""
 for C in $CHANNELS; do
   case "$C" in */) ;; *) C="$C/" ;; esac
-  if "$PY" - "$C" <<'PYEOF' >/dev/null 2>&1
-import sys, urllib.request, pathlib
-url = sys.argv[1] + "update.json"
-if url.startswith("file://"):
-    pathlib.Path(url[7:]).read_bytes()
-else:
-    req = urllib.request.Request(url, headers={"User-Agent": "takealot-erp-bootstrap"})
-    urllib.request.urlopen(req, timeout=25).read()
-PYEOF
-  then CHANNEL="$C"; echo "   通道: $CHANNEL"; break; fi
+  if fetch "${C}update.json"; then CHANNEL="$C"; echo "   通道: $CHANNEL"; break; fi
   echo "   通道不可用，换下一个: $C" >&2
 done
 [ -n "$CHANNEL" ] || { echo "所有通道都取不到 update.json，中止（什么都不装）" >&2; exit 1; }
@@ -48,19 +80,9 @@ trap 'rm -rf "$TMP"' EXIT
 echo "── Takealot ERP 升级"
 echo "   通道: $CHANNEL"
 
-# 1) 取清单（支持 file:// 与 http(s)://）
-"$PY" - "$CHANNEL" "$TMP/update.json" <<'EOF'
-import sys, urllib.request, pathlib
-base, out = sys.argv[1], sys.argv[2]
-url = base + "update.json"
-if url.startswith("file://"):
-    data = pathlib.Path(url[7:]).read_bytes()
-else:
-    req = urllib.request.Request(url, headers={"User-Agent": "takealot-erp-bootstrap"})
-    data = urllib.request.urlopen(req, timeout=30).read()
-pathlib.Path(out).write_bytes(data)
-print("   清单: OK")
-EOF
+# 1) 取清单（curl 优先；file:// 与 http(s):// 都走同一个 fetch）
+fetch "${CHANNEL}update.json" "$TMP/update.json" || { echo "取清单失败，中止（什么都不装）" >&2; exit 1; }
+echo "   清单: OK"
 
 # 2) 读清单里的包名/指纹/版本
 #    （注意：不要写成 `read <<EOF $(... <<EOF ...)` —— sh 里嵌套 heredoc 套进命令替换是非法语法，
@@ -77,14 +99,9 @@ SHA="$(cut -f2 "$TMP/meta")"
 REMOTE="$(cut -f3 "$TMP/meta")"
 [ -n "$NAME" ] || { echo "清单里没有 payload.name，中止" >&2; exit 1; }
 
-# 3) 下载
-echo "   包体: $NAME（$REMOTE）"
-if [ "${CHANNEL#file://}" != "$CHANNEL" ]; then
-  cp "${CHANNEL#file://}$NAME" "$TMP/$NAME"
-else
-  command -v curl >/dev/null 2>&1 || { echo "需要 curl 下载包体" >&2; exit 1; }
-  curl -fsSL "$CHANNEL$NAME" -o "$TMP/$NAME"
-fi
+# 3) 下载（curl 优先，python 兜底 —— 与探测/清单同一套；失败即中止）
+printf '   包体: %s（%s）\n' "$NAME" "$REMOTE"
+fetch "${CHANNEL}${NAME}" "$TMP/$NAME" || { echo "包体下载失败，中止（什么都不装）" >&2; exit 1; }
 
 # 4) 校验（不通过就退出，什么都不动）
 GOT="$("$PY" -c "import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "$TMP/$NAME")"

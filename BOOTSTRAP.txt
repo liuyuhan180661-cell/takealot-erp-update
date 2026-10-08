@@ -1,19 +1,37 @@
-BOOTSTRAP 引导说明（新机器 / 老客户第一次接上自更新）
+BOOTSTRAP 引导说明（全新机器 / 已装机器接上自更新）
 ================================================
+
+0) 全新机器（**还没装过 ERP**）：不需要先拿交付包，直接从通道自举装。
+   前提只有一条：机器上有 Python 3.10+（Windows 用 python.org 的 3.12 x64，与包内 wheelhouse 对应）。
+
+   Windows（PowerShell）:
+     iwr https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/update.ps1 -OutFile "$env:TEMP\update.ps1"
+     powershell -ExecutionPolicy Bypass -File "$env:TEMP\update.ps1"
+   macOS / Linux:
+     curl -fsSL https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/update.sh -o update.sh
+     sh update.sh
+
+   它做的事：取 update.json -> 下载整包 -> 校验 sha256（不符一个字节都不写）-> 交给新包自己的 setup
+   （建独立 venv、离线装依赖、铺服务端与前端、起服务、跑自检）。装完机器上就有 erp 命令与桌面入口，
+   以后升级：<ERP_HOME> 的 venv python 跑 server/cli.py update --check。
+
+   raw 不通就换 gh-proxy.com 前缀或 jsDelivr 镜像（与第 1 步同一套链接）。
+
+1) 已装机器（Hermes 插件形态 / 老装机）接上自更新：
 
 客户机上的 Hermes agent（或你自己）按下面三步走，之后就能一直自己更新：
 
-1) 下载更新器（三个链接哪个通就用哪个；202610072224 那段是防止 CDN 缓存压住新版本的，原样带上）
-   https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610072224
-   https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610072224
-   https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/selfupdate.py?cb=202610072224
+   a) 下载更新器（三个链接哪个通就用哪个；202610081727 那段是防止 CDN 缓存压住新版本的，原样带上）
+   https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610081727
+   https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610081727
+   https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/selfupdate.py?cb=202610081727
    放到： %LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py
 
-2) 只检查、不动文件（把所有结果念给用户）
+   b) 只检查、不动文件（把所有结果念给用户）
    <Hermes venv python> "%LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py" ^
        --repo liuyuhan180661-cell/takealot-erp-update
 
-3) 用户确认后应用（自动备份；出问题可 --rollback）
+   c) 用户确认后应用（自动备份；出问题可 --rollback）
    <Hermes venv python> "...\selfupdate.py" --repo liuyuhan180661-cell/takealot-erp-update --apply
 
 规则：先 dry-run 再 apply；校验失败一律中止；永不碰 state/；更新完跑 selfcheck.ps1 并报实际结果。
