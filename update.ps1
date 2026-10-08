@@ -101,20 +101,35 @@ try {
   $mismatch = ""
   foreach ($cand in $bodyCandidates) {
     if (Test-Path $zipPath) { Remove-Item -Force $zipPath }
+    # PS 5.1 trap: with $ErrorActionPreference='Stop', a native exe that writes to stderr
+    # (curl does when it fails) is raised as a TERMINATING NativeCommandError that bypasses
+    # the catch below - measured on a real box: raw stalled at 3.9/8.5 MB, curl exited 28,
+    # and the whole bootstrap died instead of falling through to the next channel.
+    # So run native tools with EAP='Continue' and judge by exit code only.
+    $eap = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
     try {
       if ($cand.StartsWith("file://")) {
         Copy-Item ($cand.Substring(7) + $name) $zipPath
+        $rc = 0
       } elseif (Test-Path $curlExe) {
-        & $curlExe -fsSL --max-time $BodyTimeout ($cand + $name) -o $zipPath
-        if ($LASTEXITCODE -ne 0) { throw "curl exit $LASTEXITCODE" }
+        & $curlExe -fsSL --max-time $BodyTimeout ($cand + $name) -o $zipPath 2>&1 | Out-Null
+        $rc = $LASTEXITCODE
       } else {
-        Invoke-WebRequest -Uri ($cand + $name) -OutFile $zipPath -UseBasicParsing -TimeoutSec $BodyTimeout
+        Invoke-WebRequest -Uri ($cand + $name) -OutFile $zipPath -UseBasicParsing -TimeoutSec $BodyTimeout -ErrorAction Stop
+        $rc = 0
       }
     } catch {
-      Write-Host "   body channel failed, trying next: $cand" -ForegroundColor DarkYellow
+      $rc = -1
+    } finally {
+      $ErrorActionPreference = $eap
+    }
+    if ($rc -ne 0) {
+      Write-Host "   body channel failed (exit $rc), trying next: $cand" -ForegroundColor DarkYellow
       continue
     }
-    $gotSha = (Get-FileHash -Algorithm SHA256 -Path $zipPath).Hash.ToLower()
+    try { $gotSha = (Get-FileHash -Algorithm SHA256 -Path $zipPath -ErrorAction Stop).Hash.ToLower() }
+    catch { Write-Host "   no bytes from this channel, trying next: $cand" -ForegroundColor DarkYellow; continue }
     if ($wantSha -and ($gotSha -ne $wantSha.ToLower())) {
       $mismatch = "want $wantSha got $gotSha"
       Write-Host "   sha256 mismatch from this channel, trying next: $cand" -ForegroundColor DarkYellow
@@ -153,8 +168,13 @@ try {
   if (-not $runner) { throw "no python found (install Python 3.10+ or point ERP_HOME at an existing install)" }
 
   Write-Host "== installing into $ErpHome =="
+  # same PS 5.1 trap as above: cli.py writes progress to stderr, and a native command's
+  # stderr under EAP='Stop' would abort us before we can read the exit code.
+  $eap2 = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
   & $runner $cli.FullName setup --source $payload --erp-home $ErpHome --offline
   $rc = $LASTEXITCODE
+  $ErrorActionPreference = $eap2
 
   Write-Host ""
   if ($rc -eq 0) {
