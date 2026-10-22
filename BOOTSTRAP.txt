@@ -8,11 +8,11 @@ BOOTSTRAP 引导说明（全新机器 / 已装机器接上自更新）
    别在原地等；判断标准是"超过 45 秒没有字节"）：
 
    Windows（PowerShell，两条都试，哪条先成功用哪条）:
-     curl.exe -fsSL --max-time 45 -o "$env:TEMP\update.ps1" "https://gh-proxy.com/https://raw.githubusercontent.com/<owner>/<repo>/main/update.ps1?cb=<随机数>"
-     curl.exe -fsSL --max-time 45 -o "$env:TEMP\update.ps1" "https://raw.githubusercontent.com/<owner>/<repo>/main/update.ps1?cb=<随机数>"
+     curl.exe -fsSL --max-time 45 -o "$env:TEMP\update.ps1" "https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/update.ps1?cb=<随机数>"
+     curl.exe -fsSL --max-time 45 -o "$env:TEMP\update.ps1" "https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/update.ps1?cb=<随机数>"
      powershell -ExecutionPolicy Bypass -File "$env:TEMP\update.ps1"
    macOS / Linux:
-     curl -fsSL --max-time 45 -o update.sh "https://gh-proxy.com/https://raw.githubusercontent.com/<owner>/<repo>/main/update.sh?cb=<随机数>"
+     curl -fsSL --max-time 45 -o update.sh "https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/update.sh?cb=<随机数>"
      sh update.sh
 
    引导脚本自己会做的事：取 update.json -> 下载整包（**逐通道试，每条 120 秒预算**，取第一个下完且
@@ -44,17 +44,17 @@ BOOTSTRAP 引导说明（全新机器 / 已装机器接上自更新）
 2) 已装机器（Hermes 插件形态 / 老装机）接上自更新：
 客户机上的 Hermes agent（或你自己）按下面三步走，之后就能一直自己更新：
 
-   a) 下载更新器（三个链接哪个通就用哪个；202610211852 那段是防止 CDN 缓存压住新版本的，原样带上）
-   https://raw.githubusercontent.com/<owner>/<repo>/main/selfupdate.py?cb=202610211852
-   https://gh-proxy.com/https://raw.githubusercontent.com/<owner>/<repo>/main/selfupdate.py?cb=202610211852
-   https://cdn.jsdelivr.net/gh/<owner>/<repo>@main/selfupdate.py?cb=202610211852
+   a) 下载更新器（三个链接哪个通就用哪个；202610221943 那段是防止 CDN 缓存压住新版本的，原样带上）
+   https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610221943
+   https://gh-proxy.com/https://raw.githubusercontent.com/liuyuhan180661-cell/takealot-erp-update/main/selfupdate.py?cb=202610221943
+   https://cdn.jsdelivr.net/gh/liuyuhan180661-cell/takealot-erp-update@main/selfupdate.py?cb=202610221943
    放到： %LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py
 
    b) 只检查、不动文件（把所有结果念给用户）
    <Hermes venv python> "%LOCALAPPDATA%\hermes\plugins\takealot-erp\delivery\selfupdate.py" ^
-       --repo <owner>/<repo>
+       --repo liuyuhan180661-cell/takealot-erp-update
 
    c) 用户确认后应用（自动备份；出问题可 --rollback）
-   <Hermes venv python> "...\selfupdate.py" --repo <owner>/<repo> --apply
+   <Hermes venv python> "...\selfupdate.py" --repo liuyuhan180661-cell/takealot-erp-update --apply
 
 规则：先 dry-run 再 apply；校验失败一律中止；永不碰 state/；更新完跑 selfcheck.ps1 并报实际结果。
