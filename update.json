@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.22.3",
-  "released_at": "2026-10-22T22:56:40+08:00",
+  "version": "2026.10.22.4",
+  "released_at": "2026-10-22T23:24:39+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.22.3.zip",
-    "size": 8907557,
-    "md5": "fee4e055eeac40b137f1e057b94f7560",
-    "sha256": "7bfa59a7ee645ce9436487b922f30abbf1200076a4f08e1ca3c4c471544f8b20"
+    "name": "Takealot-ERP-update-2026.10.22.4.zip",
+    "size": 8907629,
+    "md5": "ed1a0c47d89d0def51d32cb503e0df8b",
+    "sha256": "c78b5722f82b6084877935b9fa554bce87885d7d2baafe95c646119741a8c13c"
   },
   "files": {
     "CHECKLIST.md": "5344e15ea083cb5c468b1d9567da1a2f",
@@ -19,7 +19,7 @@
     "install.ps1": "22498877bd1fb97fa8d47bae1c14e9ff",
     "install.sh": "3b717df1d269ddf03085f7fada8b2c1c",
     "migrate_v2_state.py": "cecd434cfe054982b7576cc2c6a3386f",
-    "payload/VERSION": "21d04574382658ae7d6e2e42fc4b2339",
+    "payload/VERSION": "8a14b063fbfe2ce55e421c529b6b4ff9",
     "payload/agent/AGENTS.md": "f651c06ab31cadc82d4ea9b0b7a4bd0c",
     "payload/agent/skills/takealot-erp-buybox-watch/SKILL.md": "456d0dc5c4ed4f4ba5fd96f815c8e8e6",
     "payload/agent/skills/takealot-erp-buybox-watch/scripts/repricing_round.py": "591d407924d3221886a5fe553dc6068b",
@@ -31,7 +31,7 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "d2d627d0a5419cbdf81d6f34f1b1f576",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "7c70be14ebc5756a649c647674c49491",
+    "payload/server/app.py": "94f6e01c12da06d538fb72914c69b65c",
     "payload/server/bridge/README-bridge.md": "a2815ddacddfc78daa89402b7a1a835b",
     "payload/server/bridge/erp_bridge.py": "c902eac19a618a495b08ced5b7b36d0b",
     "payload/server/bridge/start_bridge.bat": "b4acf09afc7431c7b7f0374b1a858beb",
@@ -66,7 +66,7 @@
     "payload/ui/plugin.js": "3d10405f17f504adbd1327c0d126c8ec",
     "payload/ui/shell.js": "63820a0cd769b566d0ef614104e22f13",
     "payload/ui/tokens.css": "92675476c96a99e8411b117254fa4d20",
-    "payload/ui/v2/index.html": "911c8379a746e922bf68a5fc8f9484a2",
+    "payload/ui/v2/index.html": "5081f6ce76b70ccc5509d6f259fee991",
     "payload/ui/vendor/app.css": "c10cdbfdf052132c76ef887fc35108fb",
     "payload/ui/vendor/build-css.mjs": "3c857fbec3311f7dab4296ff3dda6d2b",
     "payload/ui/vendor/build.sh": "f29571439ddd75132cdad54fec24112c",
@@ -117,7 +117,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 102,
-  "notes": "新建 listing：变体计划实时显示（添加/填写轴值后立即显示父行+子行数量）。",
+  "notes": "自动自适应：1440 及以下收紧表格/隐藏 Agent 列、表格不再横向溢出；1024 侧栏自动图标化；笔记本与台式机按宽度自动适配，无手动缩放。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
