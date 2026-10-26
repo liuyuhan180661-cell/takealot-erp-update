@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.26.2",
-  "released_at": "2026-10-26T14:37:12+08:00",
+  "version": "2026.10.26.3",
+  "released_at": "2026-10-26T14:39:17+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.26.2.zip",
-    "size": 8921958,
-    "md5": "daff2dc0ffa6fa57fc62917765470c67",
-    "sha256": "48d22cca6b22ffc69f284e793f7b311983ac68e626d3ac98c2e859a5d1bfce91"
+    "name": "Takealot-ERP-update-2026.10.26.3.zip",
+    "size": 8921998,
+    "md5": "cb2ac373cfbc51b4ab0e144c1baf900f",
+    "sha256": "31a938c3f2d84227e5668bb3675228616894713bfe68035d6e1e7878098ef5b3"
   },
   "files": {
     "CHECKLIST.md": "5344e15ea083cb5c468b1d9567da1a2f",
@@ -19,7 +19,7 @@
     "install.ps1": "22498877bd1fb97fa8d47bae1c14e9ff",
     "install.sh": "3b717df1d269ddf03085f7fada8b2c1c",
     "migrate_v2_state.py": "cecd434cfe054982b7576cc2c6a3386f",
-    "payload/VERSION": "19e0c83d823fc2f76047a1c95659f2ba",
+    "payload/VERSION": "81756624c06e5aebe38bab01c9e9bc91",
     "payload/agent/AGENT-UPDATE.md": "fc9a780efd770c713c0726d5e87038d7",
     "payload/agent/AGENTS.md": "26c2a5a0843e0f344d72dd01cc809915",
     "payload/agent/skills/takealot-erp-buybox-watch/SKILL.md": "456d0dc5c4ed4f4ba5fd96f815c8e8e6",
@@ -32,7 +32,7 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "d2d627d0a5419cbdf81d6f34f1b1f576",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "52039375ccc3c27b39d398b453017c5e",
+    "payload/server/app.py": "4355c8b3147f1e2b5f38620ee5495b73",
     "payload/server/bridge/README-bridge.md": "a2815ddacddfc78daa89402b7a1a835b",
     "payload/server/bridge/erp_bridge.py": "c902eac19a618a495b08ced5b7b36d0b",
     "payload/server/bridge/start_bridge.bat": "b4acf09afc7431c7b7f0374b1a858beb",
@@ -67,7 +67,7 @@
     "payload/ui/plugin.js": "3d10405f17f504adbd1327c0d126c8ec",
     "payload/ui/shell.js": "63820a0cd769b566d0ef614104e22f13",
     "payload/ui/tokens.css": "92675476c96a99e8411b117254fa4d20",
-    "payload/ui/v2/index.html": "be40ba2aff996fecc2b04ff6f12d2220",
+    "payload/ui/v2/index.html": "2a8bf20214ffbf527c37a069164c44fd",
     "payload/ui/vendor/app.css": "c10cdbfdf052132c76ef887fc35108fb",
     "payload/ui/vendor/build-css.mjs": "3c857fbec3311f7dab4296ff3dda6d2b",
     "payload/ui/vendor/build.sh": "f29571439ddd75132cdad54fec24112c",
@@ -118,7 +118,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 103,
-  "notes": "补齐今日页与外围模块的真实数据：店铺健康（自检/告警/目录/密钥/PO）、今日节奏（SAST 小时桶，订单/销售额/净利可切）。新增履约物流（出库/入库 PO + 订单履约分布，官方 API 无运单轨迹）。市场情报接 BuyBox 公开页快照；货源配对接采集箱；设置自检接 /diagnostics，通知中心与对账差异可查看/导出；采集箱手动件重尺可保存重算。修正 BuyBox 归属误判、已收货 PO 误报逾期、首屏演示数字闪现。",
+  "notes": "收尾：采集箱手动补尺寸保存重算；草稿箱扩展继续改为复制说明。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
