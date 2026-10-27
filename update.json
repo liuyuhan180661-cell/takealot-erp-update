@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.27.3",
-  "released_at": "2026-10-27T19:04:37+08:00",
+  "version": "2026.10.27.4",
+  "released_at": "2026-10-27T19:10:00+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.27.3.zip",
-    "size": 8935694,
-    "md5": "a09f99389e38b7e5969a0c61fc09f1c7",
-    "sha256": "3c8b9343a5f62292d56f4c4d7c99e403c9cab25ed84bb523a600e1ac7d376cb3"
+    "name": "Takealot-ERP-update-2026.10.27.4.zip",
+    "size": 8935710,
+    "md5": "5b80e0960642af0e888ef8f40ad835f6",
+    "sha256": "d36510476d38b68d00bff6ad82547849b06c6bb5b9e7473cf4790ad94b3913d8"
   },
   "files": {
     "CHECKLIST.md": "5344e15ea083cb5c468b1d9567da1a2f",
@@ -19,7 +19,7 @@
     "install.ps1": "22498877bd1fb97fa8d47bae1c14e9ff",
     "install.sh": "3b717df1d269ddf03085f7fada8b2c1c",
     "migrate_v2_state.py": "cecd434cfe054982b7576cc2c6a3386f",
-    "payload/VERSION": "0d8695fd55350df17b6637c917505c9a",
+    "payload/VERSION": "0a0bc696bdd690cd11bbaa390fbfc274",
     "payload/agent/AGENT-UPDATE.md": "fc9a780efd770c713c0726d5e87038d7",
     "payload/agent/AGENTS.md": "60d158dec0b34520dbda2292d5d55dfd",
     "payload/agent/skills/takealot-erp-buybox-watch/SKILL.md": "456d0dc5c4ed4f4ba5fd96f815c8e8e6",
@@ -35,11 +35,11 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "d2d627d0a5419cbdf81d6f34f1b1f576",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "47cf73dbb2d92a17451f223312de2cab",
+    "payload/server/app.py": "32cdb615f567982ff809cf285f71f303",
     "payload/server/bridge/README-bridge.md": "a2815ddacddfc78daa89402b7a1a835b",
     "payload/server/bridge/erp_bridge.py": "c902eac19a618a495b08ced5b7b36d0b",
     "payload/server/bridge/start_bridge.bat": "b4acf09afc7431c7b7f0374b1a858beb",
-    "payload/server/cli.py": "54bb9272178f93c70ebec406d0c689f7",
+    "payload/server/cli.py": "a20f567aff0a7a73598030d0b4c27133",
     "payload/server/core/bridge/README-bridge.md": "a2815ddacddfc78daa89402b7a1a835b",
     "payload/server/core/bridge/erp_bridge.py": "c902eac19a618a495b08ced5b7b36d0b",
     "payload/server/core/bridge/start_bridge.bat": "b4acf09afc7431c7b7f0374b1a858beb",
@@ -121,7 +121,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 106,
-  "notes": "新增 Agent 技能 takealot-erp-head-freight：头程/运费计算（实重与体积重取大），内置炫思 ¥95/kg ÷6000；水牛或任意自定义物流商会先询问单价、体积系数、整票/单件计费、附加费与生效日期，再计算；选品/利润核算时自动把头程计入到岸成本。含 head_freight.py 与 providers.json，operator 技能和 AGENTS.md 已加入触发说明。",
+  "notes": "头程技能安装补齐：加入 PRODUCT_SKILLS，erp entry 会链接进宿主技能目录。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
