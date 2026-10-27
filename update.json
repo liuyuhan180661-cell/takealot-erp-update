@@ -2,15 +2,15 @@
   "schema": 1,
   "product": "takealot-erp",
   "display_name": "Takealot",
-  "version": "2026.10.27.1",
-  "released_at": "2026-10-27T18:24:59+08:00",
+  "version": "2026.10.27.2",
+  "released_at": "2026-10-27T18:51:25+08:00",
   "min_version": "",
   "delivery_dir": "Takealot-ERP-Delivery-v3",
   "payload": {
-    "name": "Takealot-ERP-update-2026.10.27.1.zip",
-    "size": 8925386,
-    "md5": "05125e87ae0df6bb1fd85c0d952cffee",
-    "sha256": "96c67ab0041a895d053cb9dc9e3546099c285b97f480c042ce279cbd8c3dc416"
+    "name": "Takealot-ERP-update-2026.10.27.2.zip",
+    "size": 8927416,
+    "md5": "a21c591bdf2e0dfd42888494c23ac771",
+    "sha256": "843d88cdb0b2e7a1e35812245808fef19d7ce6a71b6daaddee07feebf75f6950"
   },
   "files": {
     "CHECKLIST.md": "5344e15ea083cb5c468b1d9567da1a2f",
@@ -19,7 +19,7 @@
     "install.ps1": "22498877bd1fb97fa8d47bae1c14e9ff",
     "install.sh": "3b717df1d269ddf03085f7fada8b2c1c",
     "migrate_v2_state.py": "cecd434cfe054982b7576cc2c6a3386f",
-    "payload/VERSION": "fc64c72b638bf3380c9db5a4cde5ccd7",
+    "payload/VERSION": "ee7538208775a49449eb7f7424bc6863",
     "payload/agent/AGENT-UPDATE.md": "fc9a780efd770c713c0726d5e87038d7",
     "payload/agent/AGENTS.md": "26c2a5a0843e0f344d72dd01cc809915",
     "payload/agent/skills/takealot-erp-buybox-watch/SKILL.md": "456d0dc5c4ed4f4ba5fd96f815c8e8e6",
@@ -32,7 +32,7 @@
     "payload/cli/erp": "5b2e55023074e25aa8cf3ab0ae389735",
     "payload/cli/erp.cmd": "d2d627d0a5419cbdf81d6f34f1b1f576",
     "payload/plugin-launcher/plugin.js": "9d4019b285190ab6fa719b1b3188937f",
-    "payload/server/app.py": "ff3343dcb0cae5e1ff9fc6973169ec78",
+    "payload/server/app.py": "6c8f515f0980e09f0a593335fb466167",
     "payload/server/bridge/README-bridge.md": "a2815ddacddfc78daa89402b7a1a835b",
     "payload/server/bridge/erp_bridge.py": "c902eac19a618a495b08ced5b7b36d0b",
     "payload/server/bridge/start_bridge.bat": "b4acf09afc7431c7b7f0374b1a858beb",
@@ -67,7 +67,7 @@
     "payload/ui/plugin.js": "3d10405f17f504adbd1327c0d126c8ec",
     "payload/ui/shell.js": "63820a0cd769b566d0ef614104e22f13",
     "payload/ui/tokens.css": "92675476c96a99e8411b117254fa4d20",
-    "payload/ui/v2/index.html": "4b102e284dcbc4d084f4c8b797665ff9",
+    "payload/ui/v2/index.html": "2b556639b385d115c581c513a7d061da",
     "payload/ui/vendor/app.css": "c10cdbfdf052132c76ef887fc35108fb",
     "payload/ui/vendor/build-css.mjs": "3c857fbec3311f7dab4296ff3dda6d2b",
     "payload/ui/vendor/build.sh": "f29571439ddd75132cdad54fec24112c",
@@ -118,7 +118,7 @@
     "verify_windows.py": "53a4e343ba7a88b84509b10911eb06c8"
   },
   "file_count": 103,
-  "notes": "对齐官方后台计数口径：导航今天=今日件数、订单=近30天件数；订单页同时显示行/单/件；待发货按订单去重。",
+  "notes": "采集箱核算面板新增头程物流：物流商下拉（炫思/水牛/自定义）、单价与体积系数、按实重与体积重取大自动算头程并计入利润；改重量/长宽高/单价即时重算 DC 与头程（/calc/profit 预览，不写库），确认后保存核算参数落库。炫思按 2026-10-26 起 ¥95/kg、体积重=长×宽×高÷6000；水牛单价/公式待补充，可先手填单价试算。",
   "channels": [
     "https://cdn.jsdelivr.net/gh/{owner}/{repo}@{ref}/",
     "https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
